@@ -23,15 +23,8 @@ public class Service implements Serializable {
     public Service() {
     }
 
-    public Service(int service_id, Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes) {
+    public Service(int service_id) {
         this.service_id = service_id;
-        this.type = type;
-        this.giga = giga;
-        this.sms = sms;
-        this.minutes = minutes;
-        this.extraFeeGiga = extraFeeGiga;
-        this.extraFeeSMS = extraFeeSMS;
-        this.extraFeeMinutes = extraFeeMinutes;
     }
 
     public float getGiga() {

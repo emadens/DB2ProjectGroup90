@@ -25,9 +25,8 @@ public class ValidityPeriod implements Serializable {
 
     public ValidityPeriod() {}
 
-    public ValidityPeriod(int Months, float Fee) {
-        this.Months = Months;
-        this.Fee = Fee;
+    public ValidityPeriod(int id) {
+        this.ID_validity_period=id;
     }
 
     public int getMonths() {return Months;}
