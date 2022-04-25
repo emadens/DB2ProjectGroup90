@@ -1,0 +1,113 @@
+package it.polimi.example.db2test.EJB.Entities;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Collection;
+
+@Entity
+@Table(name = "order", schema = "telco_db")
+public class Order implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    private int idOrder;
+    private Timestamp timestamp;
+    @ManyToOne
+    @JoinColumn(name = "Username")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "Package_ID")
+    private Package _package;
+
+    @ManyToOne
+    @JoinColumn(name = "VP_ID")
+    private ValidityPeriod validityPeriod;
+
+    @ManyToMany
+    @JoinColumn(name = "Order_ID")
+    private Collection<OptionalProduct> optionalProducts;
+
+    private boolean confirmed;
+    private float tot;
+    private Date start_date;
+
+    public Order(){}
+
+    public Order(int idOrder, Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Date start_date) {
+        this.idOrder = idOrder;
+        this.timestamp = timestamp;
+        this.user = user;
+        this._package = _package;
+        this.validityPeriod = validityPeriod;
+        this.confirmed = confirmed;
+        this.tot = tot;
+        this.start_date = start_date;
+    }
+
+    public int getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Package get_package() {
+        return _package;
+    }
+
+    public void set_package(Package _package) {
+        this._package = _package;
+    }
+
+    public ValidityPeriod getValidityPeriod() {
+        return validityPeriod;
+    }
+
+    public void setValidityPeriod(ValidityPeriod validityPeriod) {
+        this.validityPeriod = validityPeriod;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public float getTot() {
+        return tot;
+    }
+
+    public void setTot(float tot) {
+        this.tot = tot;
+    }
+
+    public Date getStart_date() {
+        return start_date;
+    }
+
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
+    }
+}
