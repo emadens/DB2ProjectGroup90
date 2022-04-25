@@ -7,7 +7,8 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "telco_db")
 @NamedQueries({ @NamedQuery(name = "user.findByName", query = "SELECT u FROM User u WHERE u.username = ?1"),
-        @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u")})
+        @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u"),
+        @NamedQuery(name = "user.checkCredentials", query = "SELECT u FROM User u WHERE u.username = ?1 and u.password = ?2")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
