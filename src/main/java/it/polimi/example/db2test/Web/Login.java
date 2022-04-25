@@ -53,8 +53,9 @@ public class Login extends HttpServlet{
         String username, password;
 
         try {
-            username = StringEscapeUtils.escapeJava(request.getParameter("Username"));
-            password = StringEscapeUtils.escapeJava(request.getParameter("Password"));
+            username = StringEscapeUtils.escapeJava(request.getParameter("username"));
+            password = StringEscapeUtils.escapeJava(request.getParameter("password"));
+            System.out.println(username);
             if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
                 throw new Exception("Missing or empty credential value");
             }
@@ -82,7 +83,7 @@ public class Login extends HttpServlet{
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("errorMsg", "Incorrect username or password");
-            path = "/loginForm.html";
+            path = "/WEB-INF/loginForm.html";
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             request.getSession().setAttribute("user", user);
