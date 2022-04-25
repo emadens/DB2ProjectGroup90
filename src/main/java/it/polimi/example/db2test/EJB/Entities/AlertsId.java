@@ -6,9 +6,12 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-@Embeddable
-public
-class AlertsId implements Serializable {
+public class AlertsId implements Serializable {
     String username;
     Timestamp timestamp;
+
+    public AlertsId(String username, Timestamp timestamp) {
+        this.username = username;
+        this.timestamp = timestamp;
+    }
 }

@@ -17,9 +17,10 @@ public class PackageService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-    public PackageService(EntityManager em) {
+
+    /*public PackageService(EntityManager em) {
         this.em = em;
-    }
+    }*/
 
     public void createPackage(int id, String name){
         Package p=new Package(id, name);

@@ -18,9 +18,9 @@ public class ServiceService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-    public ServiceService(EntityManager em) {
+    /*public ServiceService(EntityManager em) {
         this.em = em;
-    }
+    }*/
 
     public void createService(int service_id, Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
         Service s;

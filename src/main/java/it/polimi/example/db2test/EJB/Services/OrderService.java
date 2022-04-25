@@ -18,9 +18,9 @@ public class OrderService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-    public OrderService(EntityManager em) {
+    /*public OrderService(EntityManager em) {
         this.em = em;
-    }
+    }*/
 
     public void createOrder(int id){
         //TODO

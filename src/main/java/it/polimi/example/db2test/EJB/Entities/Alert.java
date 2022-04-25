@@ -9,13 +9,10 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "alerts", schema = "telco_db")
-@NamedQueries({ @NamedQuery(name = "user.findByName", query = "SELECT u FROM User u WHERE u.username = :username"),
-        @NamedQuery(name = "user.findAll", query = "SELECT u FROM User u")})
+@IdClass(AlertsId.class)
 public class Alert implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @EmbeddedId
-    AlertsId alertsId;
 
     @Id Timestamp timestamp;
 
@@ -27,8 +24,9 @@ public class Alert implements Serializable {
     private String email;
     private float amount;
 
-    public Alert(AlertsId alertsId) {
-        this.alertsId = alertsId;
+    public Alert(User username, Timestamp timestamp) {
+        this.username=username;
+        this.timestamp=timestamp;
     }
 
     public Alert() {
