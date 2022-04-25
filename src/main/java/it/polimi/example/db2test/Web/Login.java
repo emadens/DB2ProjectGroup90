@@ -2,22 +2,22 @@ package it.polimi.example.db2test.Web;
 
 
 import it.polimi.example.db2test.EJB.Entities.User;
+import it.polimi.example.db2test.EJB.Exceptions.CredentialsException;
 import it.polimi.example.db2test.EJB.Services.UserService;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.persistence.NonUniqueResultException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-
 
 @WebServlet("/Login")
 public class Login extends HttpServlet{
@@ -50,14 +50,47 @@ public class Login extends HttpServlet{
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username, password, email;
-        username = request.getParameter("Username");
-        password= request.getParameter("Password");
-        boolean value = uService.verifyUser(username, password);
-        String path = value? "index.html" : "/WEB-INF/LoginForm.html";
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        templateEngine.process(path, ctx, response.getWriter());
+        String username, password;
+
+        try {
+            username = StringEscapeUtils.escapeJava(request.getParameter("Username"));
+            password = StringEscapeUtils.escapeJava(request.getParameter("Password"));
+            if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
+                throw new Exception("Missing or empty credential value");
+            }
+        } catch (Exception e) {
+            // for debugging only e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
+            return;
+        }
+        User user;
+        try {
+            // query db to authenticate for user
+            user = uService.checkCredentials(username, password);
+        } catch (CredentialsException | NonUniqueResultException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
+            return;
+        }
+
+        // If the user exists, add info to the session and go to home page, otherwise
+        // show login page with error message
+
+        // deleted queryService - can give possible problems
+        String path;
+        if (user == null) {
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            ctx.setVariable("errorMsg", "Incorrect username or password");
+            path = "/loginForm.html";
+            templateEngine.process(path, ctx, response.getWriter());
+        } else {
+            request.getSession().setAttribute("user", user);
+            path = getServletContext().getContextPath() + "/Home";
+            response.sendRedirect(path);
+        }
+    }
+    public void destroy() {
     }
 }
 
