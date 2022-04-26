@@ -1,6 +1,7 @@
 package it.polimi.example.db2test.Web;
 
 
+import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Services.UserService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -40,11 +41,16 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = "/WEB-INF/homePage.html";
-        String value;
-        value = request.getParameter("button");
-        System.out.println(value);
+        User user = (User) request.getSession().getAttribute("user");
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+        if(user!=null) {
+            ctx.setVariable("loggedIn", 1);
+            ctx.setVariable("username", user.getUsername());
+        }else
+            ctx.setVariable("loggedIn", 0);
+
         templateEngine.process(path, ctx, response.getWriter());
     }
 

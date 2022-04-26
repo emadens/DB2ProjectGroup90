@@ -8,8 +8,15 @@
     <form action="Login" method="POST">
       Username: <input type="text" name="username" required> <br>
       Password: <input type="password" name="password" required><br>
-      <input type="submit" value="login">
+      <input type="submit" value="Login">
       <p th:text=" ${errorMsg}"></p>
+    </form>
+
+    <form action="Registration" method="GET" id="registrationForm">
+        <button type="submit" form="registrationForm" value="Register">Register</button>
+    </form>
+    <form action="./index.html" method="GET" id=back>
+        <button type="submit" form="back" value="index">Back</button>
     </form>
 </body>
 </html>

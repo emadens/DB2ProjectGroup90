@@ -9,8 +9,11 @@
     Username: <input type="text" name="username" required> <br>
     Password: <input type="password" name="password" required><br>
     Email: <input type="text" name="email" required><br>
-    <input type="submit" value="register">
+    <input type="submit" value="Register">
     <p th:text=" ${errorMsg}"></p>
+</form>
+<form action="./index.html" method="GET" id=back>
+    <button type="submit" form="back" value="index">Back</button>
 </form>
 </body>
 </html>

@@ -6,5 +6,16 @@
 </head>
 <body>
   <h1 align="center">In this HomePage Carlo Sucks</h1>
+
+  <section>
+      <div th:if="${loggedIn!=0}">
+          <span th:text="'Hey '+ ${username} + ', did you know that Carlo SUCKS!'"></span>
+      </div>
+      <div th:unless="${loggedIn!=0}"> Hey stranger YOU SUCK!</div>
+  </section>
+  <form action="./index.html" method="GET" id=back>
+      <button type="submit" form="back" value="index">Back</button>
+  </form>
+  // Volendo si può gestire il Logout con form[pulsante]- fare un altro servlet in cui resetti la variabile a 0 e user a null.
 </body>
 </html>
