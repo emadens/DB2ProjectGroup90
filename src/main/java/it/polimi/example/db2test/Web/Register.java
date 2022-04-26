@@ -71,7 +71,7 @@ public class Register extends HttpServlet {
         String path;
         if(!present) {
             uService.createUser(username, password, email);
-            path = "/index.html";
+            path = "/WEB-INF/loginForm.html";
         }
         else {
             path = "WEB-INF/registrationForm.html";

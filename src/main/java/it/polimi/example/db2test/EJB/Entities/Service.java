@@ -9,7 +9,7 @@ import java.util.Collection;
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private int service_id;
+    private int service_id;     //shouldn't be auto incremental?
     private Type type;
     private float giga;
     private int sms;
