@@ -36,7 +36,7 @@ public class PackageService {
             em.remove(p);
         }
     }
-    public List<Package> findAllServices(){
+    public List<Package> findAllPackages(){
         TypedQuery<Package> query = em.createQuery(
                 "SELECT p FROM Package p", Package.class);
         return query.getResultList();

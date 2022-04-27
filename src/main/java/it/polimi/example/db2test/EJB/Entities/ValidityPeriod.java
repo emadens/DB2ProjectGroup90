@@ -12,8 +12,8 @@ public class ValidityPeriod implements Serializable {
 
     @Id
     private int ID_validity_period;
-    private int Months;
-    private float Fee;
+    private int months;
+    private float fee;
 
     @OneToMany(mappedBy="validityPeriod")
     private Collection<Order> orders;
@@ -29,13 +29,13 @@ public class ValidityPeriod implements Serializable {
         this.ID_validity_period=id;
     }
 
-    public int getMonths() {return Months;}
+    public int getMonths() {return months;}
 
-    public void setMonths(int months) {Months = months;}
+    public void setMonths(int months) {this.months = months;}
 
-    public float getFee() {return Fee;}
+    public float getFee() {return fee;}
 
-    public void setFee(float fee) {Fee = fee;}
+    public void setFee(float fee) {this.fee = fee;}
 
     public Collection<Order> getOrders() {
         return orders;

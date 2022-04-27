@@ -6,6 +6,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "order", schema = "telco_db")
+@NamedQuery(name = "optionalProducts.findOrdes", query = "SELECT op FROM OptionalProduct op WHERE op.name=?1")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -14,12 +15,14 @@ public class OptionalProduct implements Serializable {
     private float fee;
 
     @ManyToMany
+    @JoinTable(name="pop", schema = "telco_db", joinColumns = @JoinColumn (name = "OP_name"), inverseJoinColumns = @JoinColumn (name = "Package_ID"))
+    private Collection<Package> packages;
+
+    @ManyToMany
     @JoinTable(name="oop", schema = "telco_db", joinColumns = @JoinColumn (name = "OP_name"), inverseJoinColumns = @JoinColumn (name = "Order_ID"))
     private Collection<Order> orders;
 
-    @ManyToMany
-    @JoinTable(name="pop", schema = "telco_db", joinColumns = @JoinColumn (name = "OP_name"), inverseJoinColumns = @JoinColumn (name = "Package_ID"))
-    private Collection<Package> packages;
+
 
 
     public OptionalProduct(){}
@@ -43,5 +46,13 @@ public class OptionalProduct implements Serializable {
 
     public void setFee(float fee) {
         this.fee = fee;
+    }
+
+    public Collection<Package> getPackages() {
+        return packages;
+    }
+
+    public Collection<Order> getOrders() {
+        return orders;
     }
 }

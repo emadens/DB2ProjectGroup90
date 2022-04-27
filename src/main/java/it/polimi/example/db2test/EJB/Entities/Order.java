@@ -27,7 +27,7 @@ public class Order implements Serializable {
     private ValidityPeriod validityPeriod;
 
     @ManyToMany
-    @JoinColumn(name = "Order_ID")
+    @JoinTable(name="oop", schema = "telco_db", joinColumns = @JoinColumn (name = "Order_ID"), inverseJoinColumns = @JoinColumn (name = "OP_name"))
     private Collection<OptionalProduct> optionalProducts;
 
     private boolean confirmed;
@@ -102,5 +102,9 @@ public class Order implements Serializable {
 
     public void setStart_date(Date start_date) {
         this.start_date = start_date;
+    }
+
+    public Collection<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
     }
 }

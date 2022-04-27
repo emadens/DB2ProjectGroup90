@@ -1,9 +1,11 @@
 package it.polimi.example.db2test.Web;
 
 
+import it.polimi.example.db2test.EJB.Entities.Package;
 import it.polimi.example.db2test.EJB.Entities.Service;
 import it.polimi.example.db2test.EJB.Entities.Type;
 import it.polimi.example.db2test.EJB.Entities.User;
+import it.polimi.example.db2test.EJB.Services.PackageService;
 import it.polimi.example.db2test.EJB.Services.ServiceService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -26,8 +28,8 @@ public class Home extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
 
-    @EJB(name = "EJB/com/example/db_test2/ServiceService.java")
-    private ServiceService sService;
+    @EJB(name = "EJB/com/example/db_test2/PackageService.java")
+    private PackageService pService;
 
     public Home() {
         super();
@@ -47,11 +49,11 @@ public class Home extends HttpServlet {
         String path = "/WEB-INF/homePage.html";
         User user = (User) request.getSession().getAttribute("user");
 
-        Vector<Service> services = (Vector<Service>) sService.findAllServices();
+        Vector<Package> packages = (Vector<Package>) pService.findAllPackages();
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        ctx.setVariable("services", services);
+        ctx.setVariable("packages", packages);
         if(user!=null) {
             ctx.setVariable("loggedIn", 1);
             ctx.setVariable("username", user.getUsername());

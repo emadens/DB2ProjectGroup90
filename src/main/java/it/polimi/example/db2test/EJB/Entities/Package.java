@@ -16,15 +16,15 @@ public class Package implements Serializable {
     private String name;
 
     @ManyToMany
-    @JoinColumn(name = "Package_ID")
+    @JoinTable(name="package_service", schema = "telco_db", joinColumns = @JoinColumn (name = "Package_ID"), inverseJoinColumns = @JoinColumn (name = "Service_id"))
     private Collection<Service> services;
 
     @ManyToMany
-    @JoinColumn(name = "package_ID")
+    @JoinTable(name="pvp", schema = "telco_db", joinColumns = @JoinColumn (name = "package_ID"), inverseJoinColumns = @JoinColumn (name = "validity_period_id"))
     private Collection<ValidityPeriod> validityPeriods;
 
     @ManyToMany
-    @JoinColumn(name = "Package_ID")
+    @JoinTable(name="pop", schema = "telco_db", joinColumns = @JoinColumn (name = "Package_ID"), inverseJoinColumns = @JoinColumn (name = "OP_name"))
     private Collection<OptionalProduct> optionalProducts;
 
     @OneToMany(mappedBy="_package")
@@ -61,4 +61,15 @@ public class Package implements Serializable {
         this.orders = orders;
     }
 
+    public Collection<Service> getServices() {
+        return services;
+    }
+
+    public Collection<ValidityPeriod> getValidityPeriods() {
+        return validityPeriods;
+    }
+
+    public Collection<OptionalProduct> getOptionalProducts() {
+        return optionalProducts;
+    }
 }
