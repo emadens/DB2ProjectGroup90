@@ -55,7 +55,6 @@ public class Login extends HttpServlet{
         try {
             username = StringEscapeUtils.escapeJava(request.getParameter("username"));
             password = StringEscapeUtils.escapeJava(request.getParameter("password"));
-            System.out.println(username);
             if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
                 throw new Exception("Missing or empty credential value");
             }

@@ -22,7 +22,7 @@ public class ServiceService {
         this.em = em;
     }*/
 
-    // TODO: Handle service_id already present
+    //TODO: Handle service_id already present
     //TODO: Handle parameters in input same of an alredy present service - if you try to create an already existent
     public void createService(int service_id, Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
         Service s;
