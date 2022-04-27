@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Telco Application Employee Login</title>
+</head>
+<body>
+<form action="EmployeeLogin" method="POST">
+  Username: <input type="text" name="name" required> <br>
+  Password: <input type="password" name="password" required><br>
+  <input type="submit" value="EmployeeLogin">
+  <p th:text=" ${errorMsg}"></p>
+</form>
+
+<form action="./index.html" method="GET" id=back>
+  <button type="submit" form="back" value="index">Back</button>
+</form>
+</body>
+</html>
