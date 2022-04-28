@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "order", schema = "telco_db")
+@Table(name = "optional_product", schema = "telco_db")
 @NamedQuery(name = "optionalProducts.findOrdes", query = "SELECT op FROM OptionalProduct op WHERE op.name=?1")
 public class OptionalProduct implements Serializable {
     private static final long serialVersionUID = 1L;

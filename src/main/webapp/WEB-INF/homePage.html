@@ -13,6 +13,14 @@
       <div th:unless="${loggedIn!=0}"> Hey stranger YOU SUCK!</div>
   </section>
   <section>
+      <div>
+          <form action="Purchase" method="GET" id="buyService">
+          <button type="submit" form="buyService" value="Purchase">Purchase</button>
+          </form>
+      </div>
+
+  </section>
+  <section>
       <fieldset th:each="p : ${packages}">
           <div>
               <p th:text="'Package Name: ' + ${p.name}"></p>
