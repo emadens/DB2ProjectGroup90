@@ -1,4 +1,4 @@
-package it.polimi.example.db2test.Web;
+package it.polimi.example.db2test.Web.Employee;
 
 import it.polimi.example.db2test.EJB.Entities.Employee;
 import it.polimi.example.db2test.EJB.Exceptions.CredentialsException;
@@ -41,7 +41,7 @@ public class EmployeeLogin extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = "/WEB-INF/employeeLoginForm.html";
+        String path = "/WEB-INF/Employee/employeeLoginForm.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         templateEngine.process(path, ctx, response.getWriter());
@@ -78,14 +78,15 @@ public class EmployeeLogin extends HttpServlet {
 
         // deleted queryService - can give possible problems
         String path;
+        System.out.println(employee.getName());
         if (employee == null) {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
             ctx.setVariable("errorMsg", "Incorrect name or password");
-            path = "/WEB-INF/employeeLoginForm.html";
+            path = "/WEB-INF/Employee/employeeLoginForm.html";
             templateEngine.process(path, ctx, response.getWriter());
         } else {
-            path = getServletContext().getContextPath() + "/EmployeeHome"; //tbd
+            path = getServletContext().getContextPath() + "/EmployeeHome";
             response.sendRedirect(path);
         }
     }

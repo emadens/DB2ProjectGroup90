@@ -22,31 +22,29 @@ public class ServiceService {
         this.em = em;
     }*/
 
-    //TODO: Handle service_id already present
-    //TODO: Handle parameters in input same of an alredy present service - if you try to create an already existent
-    public void createService(int service_id, Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
-        Service s;
+    public Service createService(Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
+        Service s = null;
         if (type==Type.FIXED_PHONE){
-            s=new Service(service_id);
+            s=new Service();
             s.setType(type);
             em.persist(s);
         }
         if (type==Type.FIXED_INTERNET){
-            s=new Service(service_id);
+            s=new Service();
             s.setType(type);
             s.setGiga(giga);
             s.setExtraFeeGiga(extraFeeGiga);
             em.persist(s);
         }
         if (type==Type.MOBILE_INTERNET){
-            s=new Service(service_id);
+            s=new Service();
             s.setType(type);
             s.setGiga(giga);
             s.setExtraFeeGiga(extraFeeGiga);
             em.persist(s);
         }
         if (type==Type.MOBILE_PHONE){
-            s=new Service(service_id);
+            s=new Service();
             s.setType(type);
             s.setMinutes(minutes);
             s.setSms(sms);
@@ -54,6 +52,7 @@ public class ServiceService {
             s.setExtraFeeSMS(extraFeeSMS);
             em.persist(s);
         }
+        return s;
     }
 
     public Service findService(int id){
@@ -70,4 +69,5 @@ public class ServiceService {
                 "SELECT s FROM Service s", Service.class);
         return query.getResultList();
     }
+
 }

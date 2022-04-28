@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Service Form</title>
+</head>
+<body>
+    <h1 align="center">Compile the form to create a new Service</h1>
+    <div align="center">
+        <form action="ChooseType" method="POST">
+            <select name="planet">
+                <option th:each="typeValue : ${typeValues}"
+                        th:value="${typeValue}" th:text="${typeValue}" ></option>
+            </select>
+            <input type="submit" value="Submit"/>
+        </form>
+        <p th:text="${type}"></p>
+        <form action="CreateService" method="POST">
+
+            <p th:if="${type.name()== 'MOBILE_INTERNET' || typeValue.name()== 'FIXED_INTERNET'}">
+                Giga: <input type="number" name="giga" required></p>
+            <p th:if="${type.name()== 'MOBILE_PHONE'}">
+                Sms: <input type="number" name="sms" required> </p>
+            <p th:if="${type.name()== 'MOBILE_PHONE'}">
+                Minutes: <input type="number" name="minutes" required> </p>
+            <p th:if="${type.name()== 'MOBILE_INTERNET' || typeValue.name()== 'FIXED_INTERNET'}">
+                ExtraFeeGiga: <input type="number" name="extraFeeGiga" required> </p>
+            <p th:if="${type.name()== 'MOBILE_PHONE'}">
+                ExtraFeeSms: <input type="number" name="extraFeeSms" required> </p>
+            <p th:if="${type.name()== 'MOBILE_PHONE'}">
+                ExtraFeeMinutes: <input type="number" name="extraFeeMinutes" required> </p>
+            <input type="submit" value="CreateService">
+            <p th:text=" ${errorMsg}"></p>
+        </form>
+    </div>
+</body>
+</html>

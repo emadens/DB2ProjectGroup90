@@ -9,7 +9,8 @@ import java.util.Collection;
 public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private int service_id;     //shouldn't be auto incremental?
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int service_id;
     private Type type;
     private float giga;
     private int sms;
@@ -22,9 +23,14 @@ public class Service implements Serializable {
     private Collection<Package> packages;
     public Service() {
     }
-
-    public Service(int service_id) {
-        this.service_id = service_id;
+    public Service(Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
+        this.type=type;
+        this.giga=giga;
+        this.sms=sms;
+        this.minutes=minutes;
+        this.extraFeeGiga=extraFeeGiga;
+        this.extraFeeMinutes=extraFeeMinutes;
+        this.extraFeeSMS=extraFeeSMS;
     }
 
     public float getGiga() {
