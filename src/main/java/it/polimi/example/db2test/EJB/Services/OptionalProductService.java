@@ -22,6 +22,7 @@ public class OptionalProductService {
         return op;
     }
 
+    // TODO: Verify if it works, the OP has an ID?
     public OptionalProduct findOptionalProduct(int id){
         return em.find(OptionalProduct.class, id);
     }

@@ -5,6 +5,20 @@
     <title>Create Optional Product</title>
 </head>
 <body>
+    <h1 align="center">Compile the form to create a new Optional Product</h1>
 
+    <div align="center">
+        <p th:text=" ${errorMsg}"></p>
+        <form action="CreateOP" method="POST">
+            <p> Name: <input type="text" name="name" required> </p>
+            <p> Fee: <input type="number" min="0" step="0.01" name="fee" required></p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div>
+        <form action="EmployeeHome" method="GET" id=back>
+            <button type="submit" form="back" value="home">Back</button>
+        </form>
+    </div>
 </body>
 </html>

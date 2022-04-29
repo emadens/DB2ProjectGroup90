@@ -11,6 +11,7 @@ public class ValidityPeriod implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID_validity_period;
     private int months;
     private float fee;
@@ -25,8 +26,9 @@ public class ValidityPeriod implements Serializable {
 
     public ValidityPeriod() {}
 
-    public ValidityPeriod(int id) {
-        this.ID_validity_period=id;
+    public ValidityPeriod(int months, float fee){
+        this.months = months;
+        this.fee = fee;
     }
 
     public int getMonths() {return months;}

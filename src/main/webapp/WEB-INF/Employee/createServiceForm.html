@@ -11,7 +11,9 @@
         <form action="ChooseType" method="POST">
             <select name="typeSelection" id="typeSelection">
                 <option th:each="typeValue : ${typeValues}"
-                        th:value="${typeValue}" th:text="${typeValue}" ></option>
+                        th:value="${typeValue}" th:text="${typeValue}"
+                        th:selected="${type}==${typeValue}" >
+                </option>
             </select>
             <input type="submit" value="Submit"/>
         </form>
@@ -21,18 +23,23 @@
         <form action="CreateService" method="POST">
 
             <p th:if="${type.name()== 'MOBILE_INTERNET' || type.name()== 'FIXED_INTERNET'}">
-                Giga: <input type="number" step="0.01" name="giga" required></p>
+                Giga: <input type="number" step="0.01" min="0" name="giga" required></p>
             <p th:if="${type.name()== 'MOBILE_PHONE'}">
-                Sms: <input type="number" name="sms" required> </p>
+                Sms: <input type="number" min="0" name="sms" required> </p>
             <p th:if="${type.name()== 'MOBILE_PHONE'}">
-                Minutes: <input type="number" name="minutes" required> </p>
+                Minutes: <input type="number" min="0" name="minutes" required> </p>
             <p th:if="${type.name()== 'MOBILE_INTERNET' || type.name()== 'FIXED_INTERNET'}">
-                ExtraFeeGiga: <input type="number" step="0.01" name="extraFeeGiga" required> </p>
+                ExtraFeeGiga: <input type="number" step="0.01" min="0" name="extraFeeGiga" required> </p>
             <p th:if="${type.name()== 'MOBILE_PHONE'}">
-                ExtraFeeSms: <input type="number" step="0.01" name="extraFeeSms" required> </p>
+                ExtraFeeSms: <input type="number" step="0.01" min="0" name="extraFeeSms" required> </p>
             <p th:if="${type.name()== 'MOBILE_PHONE'}">
-                ExtraFeeMinutes: <input type="number" step="0.01" name="extraFeeMinutes" required> </p>
+                ExtraFeeMinutes: <input type="number" step="0.01" min="0" name="extraFeeMinutes" required> </p>
             <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div>
+        <form action="EmployeeHome" method="GET" id=back>
+            <button type="submit" form="back" value="home">Back</button>
         </form>
     </div>
 </body>

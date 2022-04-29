@@ -14,11 +14,8 @@ public class ValidityPeriodService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-   /* public ValidityPeriodService(EntityManager em) {
-        this.em = em;
-    }*/
-    public void createValidityPeriod(int id, int months, float fee){
-        ValidityPeriod vp=new ValidityPeriod(id);
+    public void createValidityPeriod(int months, float fee){
+        ValidityPeriod vp=new ValidityPeriod();
         vp.setMonths(months);
         vp.setFee(fee);
         em.persist(vp);
