@@ -55,24 +55,20 @@ public class createService extends HttpServlet {
         Type type;
         int sms = -1, minutes = -1;
         float giga = -1, extraFeeGiga=-1, extraFeeMinutes=-1, extraFeeSms=-1;
+        boolean err = false;
 
-        type = Type.valueOf(request.getParameter("typeValue"));
+        type = (Type) request.getSession().getAttribute("type");
+
         switch (type) {
             case MOBILE_PHONE:
-                try {
-                    sms = Integer.parseInt(request.getParameter("sms"));
-                    minutes = Integer.parseInt(request.getParameter("minutes"));
-                    extraFeeSms = Float.parseFloat(request.getParameter("extraFeeSms"));
-                    extraFeeMinutes = Float.parseFloat(request.getParameter("extraFeeMinutes"));
-                    if(sms==-1 || minutes == -1 || extraFeeSms == -1 || extraFeeMinutes == -1) {
-                        throw new Exception("Missing or empty parameters value");
-                    }
-                    break;
-                }
-                catch (Exception e) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters value");
-                    return;
-                }
+
+                sms = Integer.parseInt(request.getParameter("sms"));
+                minutes = Integer.parseInt(request.getParameter("minutes"));
+                extraFeeSms = Float.parseFloat(request.getParameter("extraFeeSms"));
+                extraFeeMinutes = Float.parseFloat(request.getParameter("extraFeeMinutes"));
+                if(sms<0 || minutes <0 || extraFeeMinutes < 0 || extraFeeSms < 0)
+                    err = true;
+                break;
 
             case FIXED_PHONE:
                 break;
@@ -80,23 +76,28 @@ public class createService extends HttpServlet {
             case FIXED_INTERNET:
 
             case MOBILE_INTERNET:
-                try {
-                    giga = Float.parseFloat(request.getParameter("giga"));
-                    extraFeeGiga = Float.parseFloat(request.getParameter("extraFeeGiga"));
-                    if(giga==-1 || extraFeeGiga == -1 ) {
-                        throw new Exception("Missing or empty parameters value");
-                    }
-                    break;
-                }
-                catch (Exception e) {
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing parameters value");
-                    return;
-                }
+                giga = Float.parseFloat(request.getParameter("giga"));
+                extraFeeGiga = Float.parseFloat(request.getParameter("extraFeeGiga"));
+                if(giga<0 || extraFeeGiga <0)
+                    err = true;
+                break;
         }
 
-        Service service = sService.createService(type, giga, sms, minutes, extraFeeGiga, extraFeeSms, extraFeeMinutes);
+        String path;
+        if (err) {
 
-
+            ServletContext servletContext = getServletContext();
+            final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+            Type[] typeValues = Type.values();
+            ctx.setVariable("errorMsg", "Please insert positive values for the parameters");
+            ctx.setVariable("typeValues", typeValues);
+            path = "/WEB-INF/Employee/createServiceForm.html";
+            templateEngine.process(path, ctx, response.getWriter());
+        } else {
+            Service service = sService.createService(type, giga, sms, minutes, extraFeeGiga, extraFeeSms, extraFeeMinutes);
+            path = getServletContext().getContextPath() + "/CreateService";
+            response.sendRedirect(path);
+        }
     }
     public void destroy() {
     }

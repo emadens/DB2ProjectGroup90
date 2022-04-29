@@ -39,7 +39,7 @@ public class ChooseType extends HttpServlet {
 
         Type type = null;
         try {
-            type = Type.valueOf(request.getParameter("typeValue"));
+            type = Type.valueOf(request.getParameter("typeSelection"));
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Type parameter");
             return;
@@ -47,7 +47,10 @@ public class ChooseType extends HttpServlet {
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        System.out.println(type.name());
+
+        // Todo: capire se è una porcata settare sia Session attribute che Context variable
+
+        request.getSession().setAttribute("type", type);
         ctx.setVariable("type", type);
         ctx.setVariable("typeValues", Type.values());
         String path = "/WEB-INF/Employee/createServiceForm.html";

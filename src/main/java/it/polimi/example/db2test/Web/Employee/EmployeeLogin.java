@@ -78,7 +78,7 @@ public class EmployeeLogin extends HttpServlet {
 
         // deleted queryService - can give possible problems
         String path;
-        System.out.println(employee.getName());
+
         if (employee == null) {
             ServletContext servletContext = getServletContext();
             final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
