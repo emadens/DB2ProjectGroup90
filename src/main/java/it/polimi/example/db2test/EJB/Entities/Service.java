@@ -33,6 +33,8 @@ public class Service implements Serializable {
         this.extraFeeSMS=extraFeeSMS;
     }
 
+    public int getService_id(){ return  service_id;}
+
     public float getGiga() {
         return giga;
     }

@@ -5,6 +5,73 @@
     <title>Create Package Form</title>
 </head>
 <body>
+    <form th:if="serviceUP" action="ChooseServices" method="POST">
+        <fieldset>
+            <legend>STEP1: Choose the services to include into the package:</legend>
 
+            <div th:each="s: ${services}">
+                <input type="checkbox" th:name="'p-' + ${s.service_id}" th:value="${s.service_id}">
+                <label th:text="'Service ' + ${s.service_id}"></label><br>
+                <p>Service Description:</p>
+                <p th:text="'Service type: ' + ${s.type}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+                   th:text="'Minutes: ' + ${s.minutes}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+                   th:text="'SMS: ' + ${s.sms}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+                   th:text="'Extra fee for SMS: ' + ${s.extraFeeSMS}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+                   th:text="'Extra fee for Minutes: ' + ${s.extraFeeMinutes}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+                   th:text="'Giga: ' + ${s.giga}"></p>
+                <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+                   th:text="'Extra fee for giga: ' + ${s.extraFeeGiga}"></p>
+            </div>
+            <input class="btn" type="submit">
+        </fieldset>
+    </form>
+
+    <form th:if="${servicesDone}" action="ChooseVP" method="POST">
+        <fieldset>
+            <legend>STEP2: Choose the Validity Period available for this package:</legend>
+
+            <div th:each="vp: ${vps}">
+                <input type="checkbox" th:name="'vp-' + ${vp.ID_validity_period}" th:value="${vp.ID_validity_period}">
+                <label th:text=" 'Validity Period ' + ${vp.ID_validity_period}"></label><br>
+                <p>Validity Period Description:</p>
+                <p th:text="${vp.months}+' months'"></p>
+                <p th:text="${vp.fee}+' sossoldi/month'"></p>
+            </div>
+            <input class="btn" type="submit">
+        </fieldset>
+    </form>
+
+    <form th:if="${servicesDone && VPDone}" action="ChooseOP" method="POST">
+        <fieldset>
+            <legend>STEP3: Choose the Optional Products available for this package:</legend>
+
+            <div th:each="op: ${ops}">
+                <input type="checkbox" th:name="${op.name}" th:value="${op.name}">
+                <label th:text=" 'Optional Product ' + ${op.name}"></label><br>
+                <p>Optional Product Description:</p>
+                <p th:text="'Fee: '+ ${op.fee}"></p>
+            </div>
+            <input class="btn" type="submit">
+        </fieldset>
+    </form>
+
+    <form th:if="${servicesDone && VPDone && OPDone}" action="CreatePackage" method="POST">
+        <fieldset>
+            <legend>STEP4: Choose the Name of the package:</legend>
+            <p> Name: <input type="text" name="name" required> </p>
+            <input class="btn" type="submit">
+        </fieldset>
+    </form>
+
+    <div>
+        <form action="EmployeeHome" method="GET" id=back>
+            <button type="submit" form="back" value="home">Back</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -22,12 +22,11 @@ public class OptionalProductService {
         return op;
     }
 
-    // TODO: Verify if it works, the OP has an ID?
-    public OptionalProduct findOptionalProduct(int id){
-        return em.find(OptionalProduct.class, id);
+    public OptionalProduct findOptionalProduct(String name){
+        return em.find(OptionalProduct.class, name);
     }
-    public void removeOptionalProduct(int id){
-        OptionalProduct op= findOptionalProduct(id);
+    public void removeOptionalProduct(String name){
+        OptionalProduct op= findOptionalProduct(name);
         if(op!=null){
             em.remove(op);
         }

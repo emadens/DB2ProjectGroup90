@@ -19,6 +19,7 @@ public class Package implements Serializable {
     @JoinTable(name="package_service", schema = "telco_db", joinColumns = @JoinColumn (name = "Package_ID"), inverseJoinColumns = @JoinColumn (name = "Service_id"))
     private Collection<Service> services;
 
+
     @ManyToMany
     @JoinTable(name="pvp", schema = "telco_db", joinColumns = @JoinColumn (name = "package_ID"), inverseJoinColumns = @JoinColumn (name = "validity_period_id"))
     private Collection<ValidityPeriod> validityPeriods;
@@ -32,17 +33,18 @@ public class Package implements Serializable {
 
     public Package(){}
 
-    public Package(int id_package, String name) {
-        Id_package = id_package;
+    public Package(String name) {
         this.name = name;
     }
 
+    public Package(String name, Collection<Service> services, Collection<ValidityPeriod> validityPeriods, Collection<OptionalProduct> optionalProducts){
+        this.name=name;
+        this.services=services;
+        this.validityPeriods=validityPeriods;
+        this.optionalProducts=optionalProducts;
+    }
     public int getId_package() {
         return Id_package;
-    }
-
-    public void setId_package(int id_package) {
-        Id_package = id_package;
     }
 
     public String getName() {

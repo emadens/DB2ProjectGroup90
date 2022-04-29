@@ -1,5 +1,8 @@
 package it.polimi.example.db2test.EJB.Services;
+import it.polimi.example.db2test.EJB.Entities.OptionalProduct;
 import it.polimi.example.db2test.EJB.Entities.Package;
+import it.polimi.example.db2test.EJB.Entities.Service;
+import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
 
 
 import javax.ejb.LocalBean;
@@ -7,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Collection;
 import java.util.List;
 
 import java.util.List;
@@ -17,13 +21,8 @@ public class PackageService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-
-    /*public PackageService(EntityManager em) {
-        this.em = em;
-    }*/
-
-    public void createPackage(int id, String name){
-        Package p=new Package(id, name);
+    public void createPackage(String name, Collection<Service> services, Collection<ValidityPeriod> validityPeriods, Collection<OptionalProduct> optionalProducts){
+        Package p=new Package(name, services, validityPeriods, optionalProducts);
         em.persist(p);
     }
 

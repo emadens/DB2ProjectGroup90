@@ -1,10 +1,8 @@
 package it.polimi.example.db2test.Web.Employee;
 
-import it.polimi.example.db2test.EJB.Entities.OptionalProduct;
 import it.polimi.example.db2test.EJB.Entities.Service;
+import it.polimi.example.db2test.EJB.Entities.Type;
 import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
-import it.polimi.example.db2test.EJB.Services.OptionalProductService;
-import it.polimi.example.db2test.EJB.Services.PackageService;
 import it.polimi.example.db2test.EJB.Services.ServiceService;
 import it.polimi.example.db2test.EJB.Services.ValidityPeriodService;
 import org.thymeleaf.TemplateEngine;
@@ -23,20 +21,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/CreatePackage")
-public class createPackage extends HttpServlet {
+@WebServlet("/ChooseServices")
+public class ChooseServices extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
-
 
     @EJB(name = "EJB/com/example/db_test2/EJB/ServiceService.java")
     private ServiceService sService;
 
+    @EJB(name = "EJB/com/example/db_test2/EJB/ValidityPeriodService.java")
+    private ValidityPeriodService vpService;
 
-    @EJB(name = "EJB/com/example/db_test2/EJB/PackageService.java")
-    private PackageService pService;
-
-    public createPackage(){}
+    public ChooseServices(){}
 
     public void init() throws ServletException {
         ServletContext servletContext = getServletContext();
@@ -49,33 +45,28 @@ public class createPackage extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-
-        String path = "/WEB-INF/Employee/createPackageForm.html";
-        ServletContext servletContext = getServletContext();
-        List<Service> services = new ArrayList<>();
-        services =  sService.findAllServices();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("services", services);
-        ctx.setVariable("serviceUP", true);
-        templateEngine.process(path, ctx, response.getWriter());
+        doPost(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        List<ValidityPeriod> vps = new ArrayList<>();
+        vps = vpService.findAllServices();
+        List<Service> services = new ArrayList<>();
         List<Service> selectedServices = new ArrayList<>();
-        List<ValidityPeriod> validityPeriods = new ArrayList<>();
-        List<OptionalProduct> optionalProducts = new ArrayList<>();
-        String name = null;
-        selectedServices = (List<Service>) request.getSession().getAttribute("selctedServices");
-        validityPeriods = (List<ValidityPeriod>) request.getSession().getAttribute("selectedVP");
-        optionalProducts = (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
+        services = sService.findAllServices();
+        for(Service s: services){
+            String param = request.getParameter("p-" + s.getService_id());
+            if(param != null){
+                selectedServices.add(sService.findService(Integer.parseInt(param)));
+            }
+        }
 
-         name = request.getParameter("name");
-
-        pService.createPackage(name, selectedServices, validityPeriods, optionalProducts);
-        request.getSession().removeAttribute("selctedServices");
-        request.getSession().removeAttribute("selectedVP");
-        request.getSession().removeAttribute("selectedOP");
-        String path = getServletContext().getContextPath() + "/CreatePackage";
-        response.sendRedirect(path);
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        request.getSession().setAttribute("selectedServices", selectedServices);
+        ctx.setVariable("servicesDone", 1);
+        ctx.setVariable("vps", vps);
+        String path = "/WEB-INF/Employee/createPackageForm.html";
+        templateEngine.process(path, ctx, response.getWriter());
     }
 }

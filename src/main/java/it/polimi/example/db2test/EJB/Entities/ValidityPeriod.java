@@ -31,6 +31,7 @@ public class ValidityPeriod implements Serializable {
         this.fee = fee;
     }
 
+    public int getID_validity_period(){ return ID_validity_period;}
     public int getMonths() {return months;}
 
     public void setMonths(int months) {this.months = months;}
