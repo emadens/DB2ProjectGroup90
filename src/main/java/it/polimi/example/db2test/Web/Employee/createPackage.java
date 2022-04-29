@@ -65,14 +65,14 @@ public class createPackage extends HttpServlet {
         List<ValidityPeriod> validityPeriods = new ArrayList<>();
         List<OptionalProduct> optionalProducts = new ArrayList<>();
         String name = null;
-        selectedServices = (List<Service>) request.getSession().getAttribute("selctedServices");
+        selectedServices = (List<Service>) request.getSession().getAttribute("selectedServices");
         validityPeriods = (List<ValidityPeriod>) request.getSession().getAttribute("selectedVP");
         optionalProducts = (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
 
          name = request.getParameter("name");
 
         pService.createPackage(name, selectedServices, validityPeriods, optionalProducts);
-        request.getSession().removeAttribute("selctedServices");
+        request.getSession().removeAttribute("selectedServices");
         request.getSession().removeAttribute("selectedVP");
         request.getSession().removeAttribute("selectedOP");
         String path = getServletContext().getContextPath() + "/CreatePackage";

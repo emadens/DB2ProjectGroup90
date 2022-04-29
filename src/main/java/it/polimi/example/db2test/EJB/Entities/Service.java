@@ -21,6 +21,7 @@ public class Service implements Serializable {
     @ManyToMany
     @JoinTable(name="package_service", schema = "telco_db", joinColumns = @JoinColumn (name = "Service_id"), inverseJoinColumns = @JoinColumn (name = "Package_ID"))
     private Collection<Package> packages;
+
     public Service() {
     }
     public Service(Type type, float giga, int sms, int minutes, float extraFeeGiga, float extraFeeSMS, float extraFeeMinutes){
@@ -89,5 +90,9 @@ public class Service implements Serializable {
 
     public void setSms(int sms) {
         this.sms = sms;
+    }
+
+    public Collection<Package> getPackages() {
+        return packages;
     }
 }
