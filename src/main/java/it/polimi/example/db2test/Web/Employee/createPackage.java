@@ -75,7 +75,7 @@ public class createPackage extends HttpServlet {
         request.getSession().removeAttribute("selectedServices");
         request.getSession().removeAttribute("selectedVP");
         request.getSession().removeAttribute("selectedOP");
-        String path = getServletContext().getContextPath() + "/CreatePackage";
+        String path = getServletContext().getContextPath() + "/EmployeeHome";
         response.sendRedirect(path);
     }
 }

@@ -66,7 +66,7 @@ public class createValidityPeriod extends HttpServlet {
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             vpService.createValidityPeriod(months, fee);
-            path = getServletContext().getContextPath() + "/CreateVP";
+            path = getServletContext().getContextPath() + "/EmployeeHome";
             response.sendRedirect(path);
         }
     }

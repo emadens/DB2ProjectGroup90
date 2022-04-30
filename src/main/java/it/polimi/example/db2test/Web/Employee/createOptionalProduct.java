@@ -62,7 +62,7 @@ public class createOptionalProduct extends HttpServlet {
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             opService.createOptionalProduct(name, fee);
-            path = getServletContext().getContextPath() + "/CreateOP";
+            path = getServletContext().getContextPath() + "/EmployeeHome";
             response.sendRedirect(path);
         }
     }

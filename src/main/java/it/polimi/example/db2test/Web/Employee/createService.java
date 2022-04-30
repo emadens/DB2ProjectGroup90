@@ -95,7 +95,7 @@ public class createService extends HttpServlet {
             templateEngine.process(path, ctx, response.getWriter());
         } else {
             Service service = sService.createService(type, giga, sms, minutes, extraFeeGiga, extraFeeSms, extraFeeMinutes);
-            path = getServletContext().getContextPath() + "/CreateService";
+            path = getServletContext().getContextPath() + "/EmployeeHome";
             response.sendRedirect(path);
         }
     }
