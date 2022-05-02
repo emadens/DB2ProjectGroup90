@@ -40,4 +40,9 @@ public class PackageService {
                 "SELECT p FROM Package p", Package.class);
         return query.getResultList();
     }
+
+
+    public Package findPackage(int id){
+        return em.find(Package.class, id);
+    }
 }
