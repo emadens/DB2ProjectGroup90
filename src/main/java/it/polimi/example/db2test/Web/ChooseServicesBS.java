@@ -65,6 +65,9 @@ public class ChooseServicesBS extends HttpServlet {
         request.getSession().setAttribute("selectedServices", selectedServices);
         Package p=(Package) request.getSession().getAttribute("p");
         ctx.setVariable("vps", p.getValidityPeriods());
+        ctx.setVariable("selectedServices", selectedServices);
+        ctx.setVariable("packages", request.getAttribute("packages"));
+        ctx.setVariable("p", p);
         ctx.setVariable("servSel", true);
         String path = "/WEB-INF/buyService.html";
         templateEngine.process(path, ctx, response.getWriter());

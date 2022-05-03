@@ -1,6 +1,7 @@
 package it.polimi.example.db2test.Web;
 
 import it.polimi.example.db2test.EJB.Entities.Package;
+import it.polimi.example.db2test.EJB.Entities.Service;
 import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
 import it.polimi.example.db2test.EJB.Services.PackageService;
 import it.polimi.example.db2test.EJB.Services.ValidityPeriodService;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/ChooseVPBS")
 public class ChooseVPBS extends HttpServlet {
@@ -45,8 +47,12 @@ public class ChooseVPBS extends HttpServlet {
 
         request.getSession().setAttribute("selectedValidityPeriod", vp);
         Package p=(Package) request.getSession().getAttribute("p");
+        ctx.setVariable("p", p);
         ctx.setVariable("optionalProducts", p.getOptionalProducts());
+        ctx.setVariable("selectedServices", (List<Service>)request.getSession().getAttribute("selectedServices"));
+        ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
         ctx.setVariable("vpSel", true);
+        ctx.setVariable("packages", request.getAttribute("packages"));
         String path = "/WEB-INF/buyService.html";
         templateEngine.process(path, ctx, response.getWriter());
     }

@@ -53,7 +53,9 @@ public class Purchase extends HttpServlet {
         ServletContext servletContext = getServletContext();
         Vector<Package> packages = (Vector<Package>) pService.findAllPackages();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
         ctx.setVariable("packages", packages);
+        request.getSession().setAttribute("packages", packages);
         ctx.setVariable("packUP", true);
         templateEngine.process(path, ctx, response.getWriter());
     }

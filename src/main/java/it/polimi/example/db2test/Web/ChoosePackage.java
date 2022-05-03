@@ -47,6 +47,7 @@ public class ChoosePackage extends HttpServlet{
 
         request.getSession().setAttribute("p", p);
         ctx.setVariable("p", p);
+        ctx.setVariable("packages", request.getAttribute("packages"));
         ctx.setVariable("services", p.getServices());
         ctx.setVariable("packSel", true);
         String path = "/WEB-INF/buyService.html";

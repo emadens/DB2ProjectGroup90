@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section th:if="${recap}">
+  <p th:text="'Package Name: ' + ${p.name}"></p>
+  <p th:text="'Services:'"></p>
+  <fieldset th:each="s : ${selectedServices}">
+    <div>
+      <p th:text="'Service type: ' + ${s.type}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+         th:text="'Minutes: ' + ${s.minutes}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+         th:text="'SMS: ' + ${s.sms}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+         th:text="'Extra fee for SMS: ' + ${s.extraFeeSMS}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+         th:text="'Extra fee for Minutes: ' + ${s.extraFeeMinutes}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+         th:text="'Giga: ' + ${s.giga}"></p>
+      <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+         th:text="'Extra fee for giga: ' + ${s.extraFeeGiga}"></p>
+    </div>
+  </fieldset>
+  <p th:text="'Validity period:'"></p>
+  <p th:text="${vp.months}+' months'"></p>
+  <p th:text="${vp.fee}+' denari/month'"></p>
+  <p th:text="'Optional products:'"></p>
+  <fieldset th:each="op : ${selectedOP}">
+    <div>
+      <p th:text="'Name: '+ ${op.name}"></p>
+      <p th:text="'Fee: '+ ${op.fee}"></p>
+    </div>
+  </fieldset>
+  <p th:text="'Start Date:'"></p>
+  <p th:text="${startDate}"></p>
+</section>
+</body>
+</html>

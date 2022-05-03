@@ -55,7 +55,8 @@ public class ChooseDateBS extends HttpServlet {
         ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
         ctx.setVariable("selectedOP", (List<OptionalProduct>)request.getSession().getAttribute("selectedOP"));
         ctx.setVariable("startDate",startDate);
-        String path = "/WEB-INF/buyService.html";
+        ctx.setVariable("packages", request.getAttribute("packages"));
+        String path = "/WEB-INF/confirmationPage.html";
         templateEngine.process(path, ctx, response.getWriter());
     }
 }

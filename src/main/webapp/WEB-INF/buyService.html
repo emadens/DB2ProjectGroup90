@@ -11,10 +11,11 @@
     <h4 align="right" th:text="${username}"></h4>
     <div align="center">
 
-        <form th:if=${packUP} action="ChoosePackage" method="POST">
+        <form action="ChoosePackage" method="POST">
             <select name="packageSelected" id="packageSelected">
                 <option th:each="p : ${packages}"
-                        th:value="${p.Id_package}" th:text="${p.name}">
+                        th:value="${p.Id_package}" th:text="${p.name}"
+                        th:selected="${package}==${p}">
                 </option>
             </select>
             <input type="submit" value="Submit"/>
@@ -46,7 +47,23 @@
             <input class="btn" type="submit">
         </fieldset>
     </form>
-
+    <fieldset th:if="${servSel} or ${vpSel} or ${opSel}" th:each="s : ${selectedServices}">
+        <div>
+            <p th:text="'Service type: ' + ${s.type}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+               th:text="'Minutes: ' + ${s.minutes}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+               th:text="'SMS: ' + ${s.sms}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+               th:text="'Extra fee for SMS: ' + ${s.extraFeeSMS}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
+               th:text="'Extra fee for Minutes: ' + ${s.extraFeeMinutes}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+               th:text="'Giga: ' + ${s.giga}"></p>
+            <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
+               th:text="'Extra fee for giga: ' + ${s.extraFeeGiga}"></p>
+        </div>
+    </fieldset>
     <form th:if="${servSel}" action="ChooseVPBS" method="POST">
         <fieldset>
             <legend>STEP2: Choose the Validity Period available for this package:</legend>
@@ -59,6 +76,11 @@
             <input type="submit" value="Submit"/>
         </fieldset>
     </form>
+    <section th:if="${vpSel} or ${opSel}">
+        <p th:text="'Validity period:'"></p>
+        <p th:text="${vp.months}+' months'"></p>
+        <p th:text="${vp.fee}+' denari/month'"></p>
+    </section>
     <form th:if="${vpSel}" action="ChooseOPBS" method="POST">
         <fieldset>
             <legend>STEP3: Choose the Optional Products available for this package:</legend>
@@ -72,46 +94,19 @@
             <input class="btn" type="submit">
         </fieldset>
     </form>
+    <fieldset if="${opSel}" th:each="op : ${selectedOP}">
+        <div>
+            <p th:text="'Name: '+ ${op.name}"></p>
+            <p th:text="'Fee: '+ ${op.fee}"></p>
+        </div>
+    </fieldset>
     <form th:if="${opSel}" action="ChooseDateBS" method="POST">
         <label>
             Enter start date:
             <input type="date" name="startDate">
         </label>
-        <p><button>Submit</button></p>
+        <p><button>Confirm</button></p>
     </form>
-    <section th:if="${recap}">
-        <p th:text="'Package Name: ' + ${p.name}"></p>
-        <p th:text="'Services:'"></p>
-        <fieldset th:each="s : ${selectedServices}">
-            <div>
-                <p th:text="'Service type: ' + ${s.type}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
-                   th:text="'Minutes: ' + ${s.minutes}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
-                   th:text="'SMS: ' + ${s.sms}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
-                   th:text="'Extra fee for SMS: ' + ${s.extraFeeSMS}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_PHONE'}"
-                   th:text="'Extra fee for Minutes: ' + ${s.extraFeeMinutes}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
-                   th:text="'Giga: ' + ${s.giga}"></p>
-                <p th:if="${s.type.name() == 'MOBILE_INTERNET' || s.type.name() == 'FIXED_INTERNET'}"
-                   th:text="'Extra fee for giga: ' + ${s.extraFeeGiga}"></p>
-            </div>
-        </fieldset>
-        <p th:text="'Validity period:'"></p>
-                <p th:text="${vp.months}+' months'"></p>
-                <p th:text="${vp.fee}+' denari/month'"></p>
-        <p th:text="'Optional products:'"></p>
-        <fieldset th:each="op : ${selectedOP}">
-            <div>
-                <p th:text="'Name: '+ ${op.name}"></p>
-                <p th:text="'Fee: '+ ${op.fee}"></p>
-            </div>
-        </fieldset>
-        <p th:text="'Start Date:'"></p>
-        <p th:text="${startDate}"></p>
-    </section>
     <div>
         <form action="Home" method="GET" id=back>
             <button type="submit" form="back" value="home">Back</button>
