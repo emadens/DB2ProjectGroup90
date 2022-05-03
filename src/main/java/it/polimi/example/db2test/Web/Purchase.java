@@ -72,7 +72,7 @@ public class Purchase extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        request.getSession().setAttribute("selectedOP", selectedOP);
-        //TODO
+
+
     }
 }
