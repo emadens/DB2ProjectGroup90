@@ -69,7 +69,7 @@ public class createPackage extends HttpServlet {
         validityPeriods = (List<ValidityPeriod>) request.getSession().getAttribute("selectedVP");
         optionalProducts = (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
 
-         name = request.getParameter("name");
+        name = request.getParameter("name");
 
         pService.createPackage(name, selectedServices, validityPeriods, optionalProducts);
         request.getSession().removeAttribute("selectedServices");

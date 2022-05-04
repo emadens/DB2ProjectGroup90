@@ -2,6 +2,7 @@ package it.polimi.example.db2test.Web;
 
 import it.polimi.example.db2test.EJB.Entities.Package;
 import it.polimi.example.db2test.EJB.Entities.Service;
+import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
 import it.polimi.example.db2test.EJB.Services.PackageService;
 import it.polimi.example.db2test.EJB.Services.ValidityPeriodService;
@@ -42,15 +43,24 @@ public class ChooseVPBS extends HttpServlet {
         ValidityPeriod vp =null;
         vp=vpService.findValidityPeriod(Integer.parseInt(request.getParameter("validityPeriod")));
 
+        User user = (User) request.getSession().getAttribute("user");
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         request.getSession().setAttribute("selectedValidityPeriod", vp);
         Package p=(Package) request.getSession().getAttribute("p");
+
+        if(user!=null)
+            ctx.setVariable("username", user.getUsername());
+        else
+            ctx.setVariable("username", "Guest");
         ctx.setVariable("p", p);
         ctx.setVariable("optionalProducts", p.getOptionalProducts());
-        ctx.setVariable("selectedServices", (List<Service>)request.getSession().getAttribute("selectedServices"));
-        ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
+        ctx.setVariable("selectedServices", request.getSession().getAttribute("selectedServices"));
+        ctx.setVariable("vp", request.getSession().getAttribute("selectedValidityPeriod"));
+        ctx.setVariable("packSel", true);
+        ctx.setVariable("servSel", true);
         ctx.setVariable("vpSel", true);
         ctx.setVariable("packages", request.getAttribute("packages"));
         String path = "/WEB-INF/buyService.html";

@@ -2,6 +2,7 @@ package it.polimi.example.db2test.Web;
 
 import it.polimi.example.db2test.EJB.Entities.Package;
 import it.polimi.example.db2test.EJB.Entities.Service;
+import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
 import it.polimi.example.db2test.EJB.Services.ServiceService;
 import it.polimi.example.db2test.EJB.Services.ValidityPeriodService;
@@ -60,16 +61,39 @@ public class ChooseServicesBS extends HttpServlet {
             }
         }
 
+        User user = (User) request.getSession().getAttribute("user");
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        request.getSession().setAttribute("selectedServices", selectedServices);
         Package p=(Package) request.getSession().getAttribute("p");
-        ctx.setVariable("vps", p.getValidityPeriods());
-        ctx.setVariable("selectedServices", selectedServices);
-        ctx.setVariable("packages", request.getAttribute("packages"));
+
+
+        if(user!=null)
+            ctx.setVariable("username", user.getUsername());
+        else
+            ctx.setVariable("username", "Guest");
+
+
+        // Variables needed with or without error
         ctx.setVariable("p", p);
-        ctx.setVariable("servSel", true);
+        ctx.setVariable("packSel", true);
+        ctx.setVariable("packages", request.getSession().getAttribute("packages"));
+
+        //Variables needed only in case of error.
+        if(selectedServices.isEmpty()){
+            ctx.setVariable("pSel", p);
+            ctx.setVariable("services", p.getServices());
+            ctx.setVariable("errorMsg", "Please select at least one Service");
+        }
+
+        //Variables needed only in case of success.
+        else{
+            request.getSession().setAttribute("selectedServices", selectedServices);
+            ctx.setVariable("vps", p.getValidityPeriods());
+            ctx.setVariable("selectedServices", selectedServices);
+            ctx.setVariable("servSel", true);
+        }
         String path = "/WEB-INF/buyService.html";
         templateEngine.process(path, ctx, response.getWriter());
+
     }
 }

@@ -61,11 +61,21 @@ public class ChooseServices extends HttpServlet {
             }
         }
 
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        request.getSession().setAttribute("selectedServices", selectedServices);
-        ctx.setVariable("servicesDone", 1);
-        ctx.setVariable("vps", vps);
+        if(selectedServices.isEmpty()){
+            ctx.setVariable("services", services);
+            ctx.setVariable("serviceUP", true);
+            ctx.setVariable("errorMsg", "Please select at least one Service");
+
+        }
+        else{
+            request.getSession().setAttribute("selectedServices", selectedServices);
+            ctx.setVariable("servicesDone", 1);
+            ctx.setVariable("vps", vps);
+        }
+
         String path = "/WEB-INF/Employee/createPackageForm.html";
         templateEngine.process(path, ctx, response.getWriter());
     }

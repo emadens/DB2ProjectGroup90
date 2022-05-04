@@ -4,7 +4,6 @@ package it.polimi.example.db2test.Web;
 import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Exceptions.CredentialsException;
 import it.polimi.example.db2test.EJB.Services.UserService;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -44,6 +43,7 @@ public class Login extends HttpServlet{
         String path = "/WEB-INF/loginForm.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        System.out.println(request.getAttribute("loginForm"));
         templateEngine.process(path, ctx, response.getWriter());
     }
 
@@ -53,19 +53,18 @@ public class Login extends HttpServlet{
         String username, password;
 
         try {
-            username = StringEscapeUtils.escapeJava(request.getParameter("username"));
-            password = StringEscapeUtils.escapeJava(request.getParameter("password"));
+            username = request.getParameter("username");
+            password = request.getParameter("password");
             if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
                 throw new Exception("Missing or empty credential value");
             }
         } catch (Exception e) {
-            // for debugging only e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
             return;
         }
         User user;
         try {
-            // query db to authenticate for user
+
             user = uService.checkCredentials(username, password);
         } catch (CredentialsException | NonUniqueResultException e) {
             e.printStackTrace();
@@ -73,10 +72,8 @@ public class Login extends HttpServlet{
             return;
         }
 
-        // If the user exists, add info to the session and go to home page, otherwise
-        // show login page with error message
-
-        // deleted queryService - can give possible problems
+        boolean confirmation = (boolean) request.getSession().getAttribute("redirectConfirmation");
+        System.out.println("Confiramtion: " + confirmation);
         String path;
         if (user == null) {
             ServletContext servletContext = getServletContext();
@@ -84,9 +81,14 @@ public class Login extends HttpServlet{
             ctx.setVariable("errorMsg", "Incorrect username or password");
             path = "/WEB-INF/loginForm.html";
             templateEngine.process(path, ctx, response.getWriter());
-        } else {
+        } else if (!confirmation){
             request.getSession().setAttribute("user", user);
             path = getServletContext().getContextPath() + "/Home";
+            response.sendRedirect(path);
+        }
+        else {
+            request.getSession().setAttribute("user", user);
+            path = getServletContext().getContextPath() + "/Confirmation";
             response.sendRedirect(path);
         }
     }

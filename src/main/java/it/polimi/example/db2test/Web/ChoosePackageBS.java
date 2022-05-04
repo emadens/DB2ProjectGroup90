@@ -1,7 +1,7 @@
 package it.polimi.example.db2test.Web;
 
-import it.polimi.example.db2test.EJB.Entities.OptionalProduct;
 import it.polimi.example.db2test.EJB.Entities.Package;
+import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Services.PackageService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.Vector;
 
 @WebServlet("/ChoosePackage")
-public class ChoosePackage extends HttpServlet{
+public class ChoosePackageBS extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
     @EJB(name = "EJB/com/example/db_test2/PackageService.java")
     private PackageService pService;
-    public ChoosePackage(){}
+    public ChoosePackageBS(){}
     public void init() throws ServletException {
         ServletContext servletContext = getServletContext();
         ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -41,13 +41,18 @@ public class ChoosePackage extends HttpServlet{
 
         Package p =null;
         p=pService.findPackage(Integer.parseInt(request.getParameter("packageSelected")));
+        User user = (User) request.getSession().getAttribute("user");
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         request.getSession().setAttribute("p", p);
-        ctx.setVariable("p", p);
-        ctx.setVariable("packages", request.getAttribute("packages"));
+        if(user!=null)
+            ctx.setVariable("username", user.getUsername());
+        else
+            ctx.setVariable("username", "Guest");
+        ctx.setVariable("pSel", p);
+        ctx.setVariable("packages", request.getSession().getAttribute("packages"));
         ctx.setVariable("services", p.getServices());
         ctx.setVariable("packSel", true);
         String path = "/WEB-INF/buyService.html";

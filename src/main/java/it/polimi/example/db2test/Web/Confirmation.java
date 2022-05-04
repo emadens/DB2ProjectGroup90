@@ -1,10 +1,9 @@
 package it.polimi.example.db2test.Web;
 
-import it.polimi.example.db2test.EJB.Entities.OptionalProduct;
-import it.polimi.example.db2test.EJB.Entities.Service;
 import it.polimi.example.db2test.EJB.Entities.User;
-import it.polimi.example.db2test.EJB.Entities.ValidityPeriod;
 import it.polimi.example.db2test.EJB.Services.OptionalProductService;
+import it.polimi.example.db2test.EJB.Services.OrderService;
+import it.polimi.example.db2test.EJB.Services.PackageService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -18,14 +17,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-@WebServlet("/ChooseDateBS")
-public class ChooseDateBS extends HttpServlet {
+@WebServlet("/Confirmation")
+public class Confirmation extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
     private TemplateEngine templateEngine;
+
+    @EJB(name = "EJB/com/example/db_test2/PackageService.java")
+    private PackageService pService;
+
+    @EJB(name = "EJB/com/example/db_test2/EJB/OrderService.java")
+    private OrderService oService;
 
     @EJB(name = "EJB/com/example/db_test2/OptionalProductService.java")
     private OptionalProductService opService;
@@ -39,33 +42,34 @@ public class ChooseDateBS extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        doPost(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Date startDate = new Date();
-        System.out.println(startDate.getDate() + " " + startDate.getMonth() + " " + startDate.getYear());
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        request.getSession().setAttribute("startDate", startDate);
 
         User user = (User) request.getSession().getAttribute("user");
+
+        ServletContext servletContext = getServletContext();
+        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         if (user != null) {
             ctx.setVariable("loggedIn", 1);
             ctx.setVariable("username", user.getUsername());
             ctx.setVariable("p", request.getSession().getAttribute("p"));
-            ctx.setVariable("selectedServices", (List< Service>)request.getSession().getAttribute("selectedServices"));
-            ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
-            ctx.setVariable("selectedOP", (List<OptionalProduct>)request.getSession().getAttribute("selectedOP"));
-            ctx.setVariable("startDate",startDate);
+            ctx.setVariable("selectedServices", request.getSession().getAttribute("selectedServices"));
+            ctx.setVariable("vp", request.getSession().getAttribute("selectedValidityPeriod"));
+            ctx.setVariable("selectedOP", request.getSession().getAttribute("selectedOP"));
+            ctx.setVariable("startDate",request.getSession().getAttribute("startDate"));
             ctx.setVariable("packages", request.getAttribute("packages"));
         } else{
             ctx.setVariable("loggedIn", 0);
+            ctx.setVariable("username", "Guest");
         }
+        request.getSession().setAttribute("redirectConfirmation", true);
+
         String path = "/WEB-INF/confirmationPage.html";
 
         templateEngine.process(path, ctx, response.getWriter());
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
     }
 }

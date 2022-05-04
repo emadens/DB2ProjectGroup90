@@ -57,8 +57,10 @@ public class Home extends HttpServlet {
         if(user!=null) {
             ctx.setVariable("loggedIn", 1);
             ctx.setVariable("username", user.getUsername());
-        }else
+        }else{
+            ctx.setVariable("username", "Guest");
             ctx.setVariable("loggedIn", 0);
+        }
 
         templateEngine.process(path, ctx, response.getWriter());
     }

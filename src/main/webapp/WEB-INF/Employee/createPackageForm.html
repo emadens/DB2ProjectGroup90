@@ -5,7 +5,7 @@
     <title>Create Package Form</title>
 </head>
 <body>
-    <form th:if="serviceUP" action="ChooseServices" method="POST">
+    <form th:if="${serviceUP}" action="ChooseServices" method="POST">
         <fieldset>
             <legend>STEP1: Choose the services to include into the package:</legend>
 
@@ -28,10 +28,11 @@
                    th:text="'Extra fee for giga: ' + ${s.extraFeeGiga}"></p>
             </div>
             <input class="btn" type="submit">
+            <p th:text=" ${errorMsg}"></p>
         </fieldset>
     </form>
 
-    <form th:if="${servicesDone}" action="ChooseVP" method="POST">
+    <form th:if="${servicesDone && !VPDone}" action="ChooseVP" method="POST">
         <fieldset>
             <legend>STEP2: Choose the Validity Period available for this package:</legend>
 
@@ -46,7 +47,7 @@
         </fieldset>
     </form>
 
-    <form th:if="${servicesDone && VPDone}" action="ChooseOP" method="POST">
+    <form th:if="${servicesDone && VPDone && !OPDone}" action="ChooseOP" method="POST">
         <fieldset>
             <legend>STEP3: Choose the Optional Products available for this package:</legend>
 

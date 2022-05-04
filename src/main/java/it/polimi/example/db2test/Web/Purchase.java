@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -51,8 +52,14 @@ public class Purchase extends HttpServlet {
         ServletContext servletContext = getServletContext();
         Vector<Package> packages = (Vector<Package>) pService.findAllPackages();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        User user = (User) request.getSession().getAttribute("user");
 
+        if(user!=null)
+            ctx.setVariable("username", user.getUsername());
+        else
+            ctx.setVariable("username", "Guest");
         ctx.setVariable("packages", packages);
+        ctx.setVariable("pSel", packages.get(0));
         request.getSession().setAttribute("packages", packages);
         ctx.setVariable("packUP", true);
         templateEngine.process(path, ctx, response.getWriter());
@@ -61,15 +68,12 @@ public class Purchase extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ServletContext servletContext = getServletContext();
-        final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        ctx.setVariable("p", request.getSession().getAttribute("p"));
-        ctx.setVariable("selectedServices", (List<Service>)request.getSession().getAttribute("selectedServices"));
-        ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
-        ctx.setVariable("selectedOP", (List<OptionalProduct>)request.getSession().getAttribute("selectedOP"));
-        ctx.setVariable("startDate",request.getSession().getAttribute("startDate"));
+        Date startDate = new Date();
+        System.out.println(startDate.getDate() + " " + startDate.getMonth() + " " + startDate.getYear());
 
+        request.getSession().setAttribute("startDate", startDate);
 
-
+        String path = getServletContext().getContextPath() + "/Confirmation";
+        response.sendRedirect(path);
     }
 }
