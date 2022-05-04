@@ -36,6 +36,17 @@ public class Order implements Serializable {
 
     public Order(){}
 
+    public Order(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, Collection<OptionalProduct> optionalProducts, boolean confirmed, float tot, Date start_date) {
+        this.timestamp = timestamp;
+        this.user = user;
+        this._package = _package;
+        this.validityPeriod = validityPeriod;
+        this.optionalProducts = optionalProducts;
+        this.confirmed = confirmed;
+        this.tot = tot;
+        this.start_date = start_date;
+    }
+
     public Order(int idOrder) {
         this.idOrder = idOrder;
     }

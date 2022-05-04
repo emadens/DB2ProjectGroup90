@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<section th:if="${recap}">
+
+
+<section th:if="${loggedIn}">
   <p th:text="'Package Name: ' + ${p.name}"></p>
   <p th:text="'Services:'"></p>
   <fieldset th:each="s : ${selectedServices}">
@@ -37,6 +39,27 @@
   </fieldset>
   <p th:text="'Start Date:'"></p>
   <p th:text="${startDate}"></p>
+
+  <div>
+    <form action="Purchase" method="POST" id="buyService">
+      <button type="submit" form="buyService" value="Purchase">Buy</button>
+    </form>
+  </div>
+
 </section>
+
+
+<section th:if="${!loggedIn}">
+  <div th:with="fromOrder=${true}"></div>
+  <p th:text="'To complete the order you have to log in'"></p>
+  <form action="Login" method="GET" id="loginForm">
+    <button type="submit" form="loginForm" value="Login">Login</button>
+  </form>
+
+  <form action="Registration" method="GET" id="registrationForm">
+    <button type="submit" form="registrationForm" value="Register">Register</button>
+  </form>
+</section>
+
 </body>
 </html>

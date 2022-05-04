@@ -1,9 +1,7 @@
 package it.polimi.example.db2test.Web;
 
-import it.polimi.example.db2test.EJB.Entities.OptionalProduct;
-import it.polimi.example.db2test.EJB.Entities.Order;
+import it.polimi.example.db2test.EJB.Entities.*;
 import it.polimi.example.db2test.EJB.Entities.Package;
-import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Services.OptionalProductService;
 import it.polimi.example.db2test.EJB.Services.OrderService;
 import it.polimi.example.db2test.EJB.Services.PackageService;
@@ -62,17 +60,14 @@ public class Purchase extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<OptionalProduct> optionalProducts = new ArrayList<>();
-        List<OptionalProduct> selectedOP = new ArrayList<>();
-        optionalProducts = opService.findAllOptionalProducts();
-        for(OptionalProduct op: optionalProducts){
-            String param = request.getParameter(op.getName());
-            if(param != null){
-                selectedOP.add(opService.findOptionalProduct(param));
-            }
-        }
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        ctx.setVariable("p", request.getSession().getAttribute("p"));
+        ctx.setVariable("selectedServices", (List<Service>)request.getSession().getAttribute("selectedServices"));
+        ctx.setVariable("vp", (ValidityPeriod)request.getSession().getAttribute("selectedValidityPeriod"));
+        ctx.setVariable("selectedOP", (List<OptionalProduct>)request.getSession().getAttribute("selectedOP"));
+        ctx.setVariable("startDate",request.getSession().getAttribute("startDate"));
 
 
 

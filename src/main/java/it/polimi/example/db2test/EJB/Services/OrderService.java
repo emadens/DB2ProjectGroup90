@@ -1,5 +1,6 @@
 package it.polimi.example.db2test.EJB.Services;
-import it.polimi.example.db2test.EJB.Entities.Order;
+import it.polimi.example.db2test.EJB.Entities.*;
+import it.polimi.example.db2test.EJB.Entities.Package;
 
 
 import javax.ejb.LocalBean;
@@ -7,6 +8,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import java.sql.Timestamp;
@@ -22,9 +25,8 @@ public class OrderService {
         this.em = em;
     }*/
 
-    public void createOrder(int id){
-        //TODO
-        Order o=new Order(id);
+    public void createOrder(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, Collection<OptionalProduct> optionalProducts, boolean confirmed, float tot, Date start_date){
+        Order o=new Order( timestamp,  user,  _package,  validityPeriod, optionalProducts,  confirmed,  tot,  start_date);
         em.persist(o);
     }
 
