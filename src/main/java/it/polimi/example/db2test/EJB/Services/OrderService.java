@@ -26,7 +26,7 @@ public class OrderService {
     }*/
 
     public void createOrder(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, Collection<OptionalProduct> optionalProducts, boolean confirmed, float tot, Date start_date){
-        Order o=new Order( timestamp,  user,  _package,  validityPeriod, optionalProducts,  confirmed,  tot,  start_date);
+        Order o=new Order(timestamp,  user,  _package,  validityPeriod,   confirmed,  tot,  start_date, optionalProducts);
         em.persist(o);
     }
 

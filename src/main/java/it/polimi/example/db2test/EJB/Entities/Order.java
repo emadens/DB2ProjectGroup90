@@ -12,8 +12,11 @@ public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idOrder;
+
     private Timestamp timestamp;
+
     @ManyToOne
     @JoinColumn(name = "Username")
     private User user;
@@ -36,15 +39,15 @@ public class Order implements Serializable {
 
     public Order(){}
 
-    public Order(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, Collection<OptionalProduct> optionalProducts, boolean confirmed, float tot, Date start_date) {
+    public Order(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Date start_date, Collection<OptionalProduct> optionalProducts) {
         this.timestamp = timestamp;
         this.user = user;
         this._package = _package;
         this.validityPeriod = validityPeriod;
-        this.optionalProducts = optionalProducts;
         this.confirmed = confirmed;
         this.tot = tot;
         this.start_date = start_date;
+        this.optionalProducts = optionalProducts;
     }
 
     public Order(int idOrder) {

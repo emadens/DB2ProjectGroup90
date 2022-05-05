@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -67,9 +67,9 @@ public class Purchase extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Date startDate = new Date();
-        System.out.println(startDate.getDate() + " " + startDate.getMonth() + " " + startDate.getYear());
+        //TODO
+        Date startDate = new Date(10,11,2020);
+        //System.out.println(startDate.getDate() + " " + startDate.getMonth() + " " + startDate.getYear());
 
         request.getSession().setAttribute("startDate", startDate);
 

@@ -20,7 +20,7 @@ public class UserService {
                 .setHint("jakarta.persistence.cache.storeMode", "REFRESH").getResultList();
     }
 
-    User findByName(String username) {
+    public User findByName(String username) {
         try {
             return em.createNamedQuery("user.findByName", User.class).setParameter(1, username)
                     .getSingleResult();

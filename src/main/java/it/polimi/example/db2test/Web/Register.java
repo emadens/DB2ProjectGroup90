@@ -45,6 +45,8 @@ public class Register extends HttpServlet {
         String path = "/WEB-INF/registrationForm.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+        if(request.getSession().getAttribute("redirectConfirmation")==null)
+            request.getSession().setAttribute("redirectConfirmation", false);
         templateEngine.process(path, ctx, response.getWriter());
     }
 
