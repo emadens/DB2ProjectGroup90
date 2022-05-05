@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet("/Confirmation")
@@ -52,6 +54,7 @@ public class Confirmation extends HttpServlet {
             throws ServletException, IOException {
 
         User user = (User) request.getSession().getAttribute("user");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy"); // for reading from Calendar
 
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -62,7 +65,8 @@ public class Confirmation extends HttpServlet {
             ctx.setVariable("selectedServices", request.getSession().getAttribute("selectedServices"));
             ctx.setVariable("vp", request.getSession().getAttribute("selectedValidityPeriod"));
             ctx.setVariable("selectedOP", request.getSession().getAttribute("selectedOP"));
-            ctx.setVariable("startDate",request.getSession().getAttribute("startDate"));
+            Calendar calendar = (Calendar) request.getSession().getAttribute("startDate");
+            ctx.setVariable("startDate", sdf.format(calendar.getTime()));
             ctx.setVariable("packages", request.getAttribute("packages"));
         } else{
             ctx.setVariable("loggedIn", 0);
@@ -79,15 +83,15 @@ public class Confirmation extends HttpServlet {
             throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         User user= (User) request.getSession().getAttribute("user");
         Package pack= (Package) request.getSession().getAttribute("p");
         ValidityPeriod vp=(ValidityPeriod) request.getSession().getAttribute("selectedValidityPeriod");
         List<OptionalProduct> optionalProducts= (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
         boolean confirmation=true;
-        Date startDate=(Date) request.getSession().getAttribute("startDate");
+        Calendar startDate=(Calendar) request.getSession().getAttribute("startDate");
         float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).reduce((float) 0, Float::sum);
         //TODO: da un column doesn't match errore: da capire se è nei trrigger o è un problema di orm
-        oService.createOrder(timestamp,user,pack,vp,optionalProducts,confirmation,tot,startDate);
+        oService.createOrder(timestamp,user,pack,vp,confirmation,tot,startDate,optionalProducts);
     }
 }

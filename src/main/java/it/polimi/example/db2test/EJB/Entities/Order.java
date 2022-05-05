@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Collection;
 
 @Entity
@@ -35,11 +36,12 @@ public class Order implements Serializable {
 
     private boolean confirmed;
     private float tot;
-    private Date start_date;
+    @Temporal(TemporalType.DATE)
+    private Calendar start_date;
 
     public Order(){}
 
-    public Order(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Date start_date, Collection<OptionalProduct> optionalProducts) {
+    public Order(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Calendar start_date, Collection<OptionalProduct> optionalProducts) {
         this.timestamp = timestamp;
         this.user = user;
         this._package = _package;
@@ -110,11 +112,11 @@ public class Order implements Serializable {
         this.tot = tot;
     }
 
-    public Date getStart_date() {
+    public Calendar getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(Calendar start_date) {
         this.start_date = start_date;
     }
 

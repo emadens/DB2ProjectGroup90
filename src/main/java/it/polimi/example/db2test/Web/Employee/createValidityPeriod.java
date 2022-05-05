@@ -54,7 +54,7 @@ public class createValidityPeriod extends HttpServlet {
 
         months = Integer.parseInt(request.getParameter("months"));
         fee = Float.parseFloat(request.getParameter("fee"));
-        if(months < 1 || months > 12 || fee < 0)
+        if(months < 1 || fee < 0)
             err = true;
 
         String path;

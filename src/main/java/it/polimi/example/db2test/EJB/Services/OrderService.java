@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class OrderService {
         this.em = em;
     }*/
 
-    public void createOrder(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, Collection<OptionalProduct> optionalProducts, boolean confirmed, float tot, Date start_date){
-        Order o=new Order(timestamp,  user,  _package,  validityPeriod,   confirmed,  tot,  start_date, optionalProducts);
+    public void createOrder(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Calendar start_date, Collection<OptionalProduct> optionalProducts){
+        Order o = new Order(timestamp,  user,  _package,  validityPeriod,   confirmed,  tot,  start_date, optionalProducts);
         em.persist(o);
     }
 

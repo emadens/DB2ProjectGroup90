@@ -18,9 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.sql.Date;
-import java.util.List;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.Vector;
 
 @WebServlet("/Purchase")
@@ -67,11 +66,19 @@ public class Purchase extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //TODO
-        Date startDate = new Date(10,11,2020);
-        //System.out.println(startDate.getDate() + " " + startDate.getMonth() + " " + startDate.getYear());
 
-        request.getSession().setAttribute("startDate", startDate);
+        // TODO: to test with Calendar type instead of Date type (deprecated) already modified properly
+
+        // Read from and to works, to check what happens into the database.
+
+        String[] dates = request.getParameter("startDate").split("-");
+
+        Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendarDate.set(Calendar.YEAR, Integer.parseInt(dates[0]));
+        calendarDate.set(Calendar.MONTH, Integer.parseInt(dates[1])-1);
+        calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dates[2]));
+
+        request.getSession().setAttribute("startDate", calendarDate);
 
         String path = getServletContext().getContextPath() + "/Confirmation";
         response.sendRedirect(path);
