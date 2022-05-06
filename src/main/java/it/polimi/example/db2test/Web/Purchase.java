@@ -11,6 +11,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -67,20 +68,26 @@ public class Purchase extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // TODO: to test with Calendar type instead of Date type (deprecated) already modified properly
 
-        // Read from and to works, to check what happens into the database.
+        if(request.getParameter("startDate").equals("")){
+            request.setAttribute("errDate", true);
+            request.setAttribute("packageSelected", request.getParameter("packageSelected"));
+            RequestDispatcher rd = request.getRequestDispatcher("ChooseOPBS");
+            rd.forward(request,response);
+            doGet(request, response);
+        }
+        else {
+            String[] dates = request.getParameter("startDate").split("-");
 
-        String[] dates = request.getParameter("startDate").split("-");
+            Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            calendarDate.set(Calendar.YEAR, Integer.parseInt(dates[0]));
+            calendarDate.set(Calendar.MONTH, Integer.parseInt(dates[1]) - 1);
+            calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dates[2]));
 
-        Calendar calendarDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendarDate.set(Calendar.YEAR, Integer.parseInt(dates[0]));
-        calendarDate.set(Calendar.MONTH, Integer.parseInt(dates[1])-1);
-        calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dates[2]));
+            request.getSession().setAttribute("startDate", calendarDate);
 
-        request.getSession().setAttribute("startDate", calendarDate);
-
-        String path = getServletContext().getContextPath() + "/Confirmation";
-        response.sendRedirect(path);
+            String path = getServletContext().getContextPath() + "/Confirmation";
+            response.sendRedirect(path);
+        }
     }
 }

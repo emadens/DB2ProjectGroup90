@@ -88,10 +88,10 @@ public class Confirmation extends HttpServlet {
         Package pack= (Package) request.getSession().getAttribute("p");
         ValidityPeriod vp=(ValidityPeriod) request.getSession().getAttribute("selectedValidityPeriod");
         List<OptionalProduct> optionalProducts= (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
-        boolean confirmation=true;
+        boolean confirmation = request.getParameter("billing").equals("1");
+        System.out.println(confirmation);
         Calendar startDate=(Calendar) request.getSession().getAttribute("startDate");
         float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).reduce((float) 0, Float::sum);
-        //TODO: da un column doesn't match errore: da capire se è nei trrigger o è un problema di orm
         oService.createOrder(timestamp,user,pack,vp,confirmation,tot,startDate,optionalProducts);
     }
 }

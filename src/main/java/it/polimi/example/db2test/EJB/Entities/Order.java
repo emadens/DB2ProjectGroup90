@@ -2,7 +2,6 @@ package it.polimi.example.db2test.EJB.Entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;

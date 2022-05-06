@@ -58,6 +58,8 @@ public class ChooseOPBS extends HttpServlet {
             ctx.setVariable("username", user.getUsername());
         else
             ctx.setVariable("username", "Guest");
+        if(request.getAttribute("errDate")!=null)
+            ctx.setVariable("errorMsg", "Please select a valid date");
         ctx.setVariable("selectedServices", request.getSession().getAttribute("selectedServices"));
         ctx.setVariable("vp", request.getSession().getAttribute("selectedValidityPeriod"));
         ctx.setVariable("selectedOP", request.getSession().getAttribute("selectedOP"));

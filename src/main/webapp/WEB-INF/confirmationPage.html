@@ -42,8 +42,14 @@
       <p th:text="'Start Date: ' + ${startDate}"></p>
 
       <div>
-        <form action="Confirmation" method="POST" id="buyService">
-          <button type="submit" form="buyService" value="Confirmation">Buy</button>
+        <form action="#" th:action="@{/Confirmation(billing=1)}" method="POST">
+          <button name="buy" value="Buy">Buy</button>
+        </form>
+      </div>
+
+      <div>
+        <form action="#" th:action="@{/Confirmation(billing=0)}" method="POST">
+          <button name="fail" value="Fail">Fail</button>
         </form>
       </div>
 
