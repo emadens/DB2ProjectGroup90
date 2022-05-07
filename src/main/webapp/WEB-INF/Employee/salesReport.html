@@ -5,6 +5,49 @@
     <title>Title</title>
 </head>
 <body>
+<h1 align="center">Sales report</h1>
+<h3 align="left">Number of total purchases per package</h3>
+<div>
+<fieldset th:each="rs :${tot_ppp}":>
+    <br th:text="${rs}"></br>
+</fieldset>
+</div>
+<h3 align="left">Number of total purchases per package and validity period</h3>
+<div>
+    <fieldset th:each="rs :${tot_ppvp}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
+<h3 align="left">Total value of sales per package with and without the optional products</h3>
+<div>
+    <fieldset th:each="rs :${totSales}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
+<h3 align="left">Average number of optional products sold together with each service package.</h3>
+<div>
+    <fieldset th:each="rs :${avgOPxP}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
+<h3 align="left">Insolvent Users</h3>
+<div>
+    <fieldset th:each="rs :${insolventUsers}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
+<h3 align="left">Suspended orders</h3>
+<div>
+    <fieldset th:each="rs :${suspendedOrders}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
+<h3 align="left">Best seller optional product</h3>
+<div>
+    <fieldset th:each="rs :${bestSeller}":>
+        <p th:text="${rs}"></p>
+    </fieldset>
+</div>
 
 </body>
 </html>
