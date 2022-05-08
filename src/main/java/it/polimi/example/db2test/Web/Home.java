@@ -1,10 +1,9 @@
 package it.polimi.example.db2test.Web;
 
 
+import it.polimi.example.db2test.EJB.Entities.*;
 import it.polimi.example.db2test.EJB.Entities.Package;
-import it.polimi.example.db2test.EJB.Entities.Service;
-import it.polimi.example.db2test.EJB.Entities.Type;
-import it.polimi.example.db2test.EJB.Entities.User;
+import it.polimi.example.db2test.EJB.Services.OrderService;
 import it.polimi.example.db2test.EJB.Services.PackageService;
 import it.polimi.example.db2test.EJB.Services.ServiceService;
 import org.thymeleaf.TemplateEngine;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 @WebServlet("/Home")
@@ -30,6 +30,8 @@ public class Home extends HttpServlet {
 
     @EJB(name = "EJB/com/example/db_test2/PackageService.java")
     private PackageService pService;
+    @EJB(name = "EJB/com/example/db_test2/OrderService.java")
+    private OrderService oService;
 
     public Home() {
         super();
@@ -48,13 +50,19 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         String path = "/WEB-INF/homePage.html";
         User user = (User) request.getSession().getAttribute("user");
+        List<Order> rejOrders = new ArrayList<>();
+        List<Package> packages = new ArrayList<>();
 
-        Vector<Package> packages = (Vector<Package>) pService.findAllPackages();
+        packages =  pService.findAllPackages();
+
+
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         ctx.setVariable("packages", packages);
         if(user!=null) {
+            rejOrders = oService.findRejectedOrders(user.getUsername());
+            if(rejOrders!=null) ctx.setVariable("rejOrders", rejOrders);
             ctx.setVariable("loggedIn", 1);
             ctx.setVariable("username", user.getUsername());
         }else{

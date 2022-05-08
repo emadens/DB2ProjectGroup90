@@ -8,6 +8,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "order", schema = "telco_db")
+@NamedQuery(name = "order.findRejOrders", query = "SELECT o FROM Order o WHERE o.confirmed = false and o.user.username=?1")
 public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -59,8 +60,8 @@ public class Order implements Serializable {
         return id_Order;
     }
 
-    public void setId_Order(int idOrder) {
-        this.id_Order = idOrder;
+    public void setId_Order(int id_Order) {
+        this.id_Order = id_Order;
     }
 
     public Timestamp getTimestamp() {

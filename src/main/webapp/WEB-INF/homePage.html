@@ -5,13 +5,30 @@
     <title>HomePage</title>
 </head>
 <body>
-  <h1 align="center">In this HomePage Carlo Sucks</h1>
+  <h1 align="center">Telco Application HomePage</h1>
   <h4 align="right" th:text="${username}"></h4>
   <section>
       <div th:if="${loggedIn!=0}">
       </div>
-      <div th:unless="${loggedIn!=0}"> Hey stranger YOU SUCK!</div>
+      <div th:unless="${loggedIn!=0}"> Entered as a Guest, remember to register!</div>
   </section>
+
+  <section>
+      <fieldset th:each="o: ${rejOrders}">
+          <div>
+              <p th:text="'OrderID ' + ${o.ID_order}"></p>
+              <p th:text="'ordered:' + ${o.Timestamp}"></p>
+              <form action="#" th:action="@{/Confirmation}" method="GET">
+                  <button name="idOrder" th:value="${o.ID_order}">Buy order</button>
+              </form>
+          </div>
+
+
+      </fieldset>
+
+  </section>
+  <br>
+  <br>
   <section>
       <div>
           <form action="Purchase" method="GET" id="buyService">
