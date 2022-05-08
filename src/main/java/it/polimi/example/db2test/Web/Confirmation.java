@@ -112,7 +112,7 @@ public class Confirmation extends HttpServlet {
             ValidityPeriod vp=(ValidityPeriod) request.getSession().getAttribute("selectedValidityPeriod");
             List<OptionalProduct> optionalProducts= (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
             Calendar startDate=(Calendar) request.getSession().getAttribute("startDate");
-            float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).reduce((float) 0, Float::sum);
+            float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).map(x->x*vp.getMonths()).reduce((float) 0, Float::sum);
             oService.createOrder(timestamp,user,pack,vp,confirmation,tot,startDate,optionalProducts);
         }
         else if(confirmation) {

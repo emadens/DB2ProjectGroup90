@@ -10,7 +10,7 @@ public class TotPurchasesPerPackage {
     @Id
     private int package_id;
     private String package_name;
-    private int totale_purchases;
+    private int total_purchases;
 
     public int getPackage_id() {
         return package_id;
@@ -20,7 +20,7 @@ public class TotPurchasesPerPackage {
         return package_name;
     }
 
-    public int getTotale_purchases() {
-        return totale_purchases;
+    public int getTotal_purchases() {
+        return total_purchases;
     }
 }

@@ -51,15 +51,6 @@ public class SalesReport extends HttpServlet {
         templateResolver.setSuffix(".html");
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        StringBuilder stringBuilder= new StringBuilder();
-        /*String tot_ppp = "select package_name, totale_purchases from tot_purchase_per_package";
-        String tot_ppvp= "SELECT package_name, vp_months, purchases FROM telco_db.tot_purchases_per_pack_vp";
-        String totSalesV= "SELECT package_name, tot, tot_with_op FROM telco_db.tot_salesvalue_per_package";
-        String avgOPxP= "SELECT pack_name, avg_num_op FROM telco_db.avg_num_of_op";
-        String insolventUsers="select username from user where solvent=0";
-        String suspendedOrders="select timestamp, username, tot from telco_db.order where confirmed=0";
-        String alerts="select * from alerts";
-        String bestSeller="select opName from bestseller";*/
         List<TotPurchasesPerPackage> tot_ppp = vService.totPurchasesPerPackages();
         List<TotPurchasesPerPackageVP> tot_ppvp = vService.totPurchasesPerPackageVPS();
         List<TotSalesValuePerPackage> totSales = vService.totSalesValuePerPackages();
