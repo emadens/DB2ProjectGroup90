@@ -2,6 +2,7 @@ package it.polimi.example.db2test.EJB.Services;
 
 import it.polimi.example.db2test.EJB.Entities.User;
 import it.polimi.example.db2test.EJB.Exceptions.CredentialsException;
+import it.polimi.example.db2test.EJB.MVT.TotPurchasesPerPackageVP;
 
 
 import javax.ejb.LocalBean;
@@ -61,5 +62,11 @@ public class UserService {
             return uList.get(0);
         throw new NonUniqueResultException("More than one user registered with same credentials");
 
+    }
+
+    public List<User> findInsolvent(){
+        TypedQuery<User> query = em.createQuery(
+                "SELECT u FROM User u WHERE u.solvent=false ", User.class);
+        return query.getResultList();
     }
 }

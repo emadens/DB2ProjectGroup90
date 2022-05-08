@@ -13,7 +13,7 @@ public class Order implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idOrder;
+    private int id_Order;
 
     private Timestamp timestamp;
 
@@ -51,16 +51,16 @@ public class Order implements Serializable {
         this.optionalProducts = optionalProducts;
     }
 
-    public Order(int idOrder) {
-        this.idOrder = idOrder;
+    public Order(int id_Order) {
+        this.id_Order = id_Order;
     }
 
-    public int getIdOrder() {
-        return idOrder;
+    public int getId_Order() {
+        return id_Order;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setId_Order(int idOrder) {
+        this.id_Order = idOrder;
     }
 
     public Timestamp getTimestamp() {

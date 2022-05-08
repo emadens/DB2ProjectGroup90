@@ -40,9 +40,15 @@ public class OrderService {
             em.remove(o);
         }
     }
-    public List<Order> findAllServices(){
+    public List<Order> findAllOrders(){
         TypedQuery<Order> query = em.createQuery(
                 "SELECT o FROM Order o", Order.class);
+        return query.getResultList();
+    }
+
+    public List<Order> findSuspended(){
+        TypedQuery<Order> query = em.createQuery(
+                "SELECT o FROM Order o WHERE o.confirmed=FALSE ", Order.class);
         return query.getResultList();
     }
 }

@@ -16,11 +16,14 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String email;
+    private boolean solvent;
     @OneToMany(mappedBy= "user")
     private Collection<Order> orders;
     //@OneToMany(mappedBy ="username")
     //private Collection<Alert> alerts;
     public User(){}
+
+
 
     public User(String _username, String _password, String _email){
         this.username = _username;
@@ -42,5 +45,17 @@ public class User implements Serializable {
 
     public String toString(){
         return this.getUsername() +" " + this.getPassword() + " " + this.getEmail();
+    }
+
+    public Collection<Order> getOrders() {
+        return orders;
+    }
+
+    public boolean isSolvent() {
+        return solvent;
+    }
+
+    public void setSolvent(boolean solvent) {
+        this.solvent = solvent;
     }
 }

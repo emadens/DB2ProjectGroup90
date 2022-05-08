@@ -8,6 +8,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 @Stateless
@@ -35,5 +39,20 @@ public class OptionalProductService {
         TypedQuery<OptionalProduct> query = em.createQuery(
                 "SELECT op FROM OptionalProduct op", OptionalProduct.class);
         return query.getResultList();
+    }
+
+    public OptionalProduct findBestSeller(){
+        String bestSellerQuery="select opName from bestseller";
+        String bestSeller = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/telco_db","root", "illBaroz");
+            Statement stmt=con.createStatement();
+            ResultSet rs= stmt.executeQuery(bestSellerQuery);
+            bestSeller=rs.getString("opName");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return findOptionalProduct(bestSeller);
     }
 }
