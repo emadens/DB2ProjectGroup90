@@ -70,8 +70,13 @@ public class OrderService {
 
 
     public List<Order> findSuspended(){
-        TypedQuery<Order> query = em.createQuery(
-                "SELECT o FROM Order o WHERE o.confirmed=FALSE ", Order.class);
-        return query.getResultList();
+        List<Order> rejOrders = null;
+        try{
+            rejOrders = em.createQuery("SELECT o FROM Order o WHERE o.confirmed = false", Order.class).setHint("jakarta.persistence.cache.storeMode", "REFRESH").getResultList();
+        }
+        catch (PersistenceException e){
+            e.printStackTrace();
+        }
+        return rejOrders;
     }
 }

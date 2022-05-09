@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -43,16 +44,17 @@ public class OptionalProductService {
 
     public OptionalProduct findBestSeller(){
         String bestSellerQuery="select opName from bestseller";
-        String bestSeller = null;
+        List<String> bestSeller = new ArrayList<>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/telco_db","root", "illBaroz");
             Statement stmt=con.createStatement();
             ResultSet rs= stmt.executeQuery(bestSellerQuery);
-            bestSeller=rs.getString("opName");
+            while (rs.next())
+                bestSeller.add(rs.getString("opName"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return findOptionalProduct(bestSeller);
+        return findOptionalProduct(bestSeller.get(0));
     }
 }

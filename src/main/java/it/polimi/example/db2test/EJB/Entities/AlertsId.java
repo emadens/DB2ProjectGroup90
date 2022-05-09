@@ -2,16 +2,23 @@ package it.polimi.example.db2test.EJB.Entities;
 
 
 
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class AlertsId implements Serializable {
-    String username;
+    String user;
     Timestamp timestamp;
 
-    public AlertsId(String username, Timestamp timestamp) {
-        this.username = username;
+    public AlertsId(String user, Timestamp timestamp) {
+        this.user = user;
         this.timestamp = timestamp;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 }

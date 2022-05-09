@@ -36,9 +36,9 @@ public class AlertService {
             em.remove(a);
         }
     }
-    public List<Alert> finaAllAlerts(){
+    public List<Alert> findAllAlerts(){
         TypedQuery<Alert> query = em.createQuery(
-                "SELECT vp FROM ValidityPeriod vp", Alert.class);
+                "SELECT a FROM Alert a", Alert.class);
         return query.getResultList();
     }
 }

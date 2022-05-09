@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Table(name = "alerts", schema = "telco_db")
 @IdClass(AlertsId.class)
 public class Alert implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
 
@@ -19,13 +20,13 @@ public class Alert implements Serializable {
     @ManyToOne
     @Id
     @JoinColumn(name="username")
-    private User username;
+    private User user;
 
     private String email;
     private float amount;
 
-    public Alert(User username, Timestamp timestamp) {
-        this.username=username;
+    public Alert(User user, Timestamp timestamp) {
+        this.user = user;
         this.timestamp=timestamp;
     }
 
@@ -46,5 +47,13 @@ public class Alert implements Serializable {
 
     public void setAmount(Float amount) {
         this.amount = amount;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

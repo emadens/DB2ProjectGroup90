@@ -57,8 +57,8 @@ public class SalesReport extends HttpServlet {
         List<AvgNumberOfOP> avg = vService.avgNumberOfOPS();
         List<User> insolvent = uService.findInsolvent();
         List<Order> suspended = oService.findSuspended();
-        List<Alert> alerts = aService.finaAllAlerts();
-        OptionalProduct bestSeller=null;
+        List<Alert> alerts = aService.findAllAlerts();
+        OptionalProduct bestSeller=opService.findBestSeller();
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
         ctx.setVariable("tot_ppp", tot_ppp);
