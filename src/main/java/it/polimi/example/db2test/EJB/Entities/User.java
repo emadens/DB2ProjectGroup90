@@ -20,8 +20,10 @@ public class User implements Serializable {
     private int failedPayments;
     @OneToMany(mappedBy= "user")
     private Collection<Order> orders;
-    //@OneToMany(mappedBy ="username")
-    //private Collection<Alert> alerts;
+
+
+    @OneToMany(mappedBy ="User")
+    private Collection<Alert> alerts;
     public User(){}
 
 
@@ -44,12 +46,6 @@ public class User implements Serializable {
 
     public void setEmail(String newEmail){this.email = newEmail;}
 
-    public int getFailedPayments() {
-        return failedPayments;
-    }
-    public void setFailedPayments(int failedPayments) {
-        this.failedPayments = failedPayments;
-    }
 
     public String toString(){
         return this.getUsername() +" " + this.getPassword() + " " + this.getEmail();
@@ -65,5 +61,25 @@ public class User implements Serializable {
 
     public void setSolvent(boolean solvent) {
         this.solvent = solvent;
+    }
+
+    public Collection<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public int getFailedPayments() {
+        return failedPayments;
+    }
+
+    public void setFailedPayments(int failedPayments) {
+        this.failedPayments = failedPayments;
+    }
+
+    public void setOrders(Collection<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void setAlerts(Collection<Alert> alerts) {
+        this.alerts = alerts;
     }
 }

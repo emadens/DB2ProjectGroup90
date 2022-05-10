@@ -69,4 +69,11 @@ public class UserService {
                 "SELECT u FROM User u WHERE u.solvent=false ", User.class);
         return query.getResultList();
     }
+
+    public void failedPayment(String username){
+        User u=findByName(username);
+        u.setFailedPayments(u.getFailedPayments()+1);
+        //em.refresh(u);
+
+    }
 }

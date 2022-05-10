@@ -102,15 +102,19 @@ public class Confirmation extends HttpServlet {
         boolean existent = !request.getParameter("existent").equals("-1");
         if(existent) orderID = Integer.parseInt(request.getParameter("existent"));
         Order o = (Order) request.getSession().getAttribute("order");
+        User user= (User) request.getSession().getAttribute("user");
         if(!existent){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            User user= (User) request.getSession().getAttribute("user");
+
             Package pack= (Package) request.getSession().getAttribute("p");
             ValidityPeriod vp=(ValidityPeriod) request.getSession().getAttribute("selectedValidityPeriod");
             List<OptionalProduct> optionalProducts= (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
             Calendar startDate=(Calendar) request.getSession().getAttribute("startDate");
             float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).map(x->x*vp.getMonths()).reduce((float) 0, Float::sum);
             oService.createOrder(timestamp,user,pack,vp,confirmation,tot,startDate,optionalProducts);
+            if(!confirmation){
+                uService.failedPayment(user.getUsername());
+            }
         }
         else if(confirmation) {
             try {
@@ -118,6 +122,8 @@ public class Confirmation extends HttpServlet {
             } catch (OrderIDException e) {
                 throw new RuntimeException(e);
             }
+        }else {
+            uService.failedPayment(user.getUsername());
         }
 
         String path = getServletContext().getContextPath() + "/Home";
