@@ -68,7 +68,10 @@ public class SalesReport extends HttpServlet {
         ctx.setVariable("insolventUsers", insolvent);
         ctx.setVariable("suspendedOrders", suspended);
         ctx.setVariable("alerts", alerts);
-        ctx.setVariable("bestseller", bestSeller);
+        if(bestSeller!=null)
+            ctx.setVariable("bestsellerName", bestSeller.getName());
+        else
+            ctx.setVariable("bestsellerName", "");
         String path = "/WEB-INF/Employee/salesReport.html";
         templateEngine.process(path, ctx, response.getWriter());
 

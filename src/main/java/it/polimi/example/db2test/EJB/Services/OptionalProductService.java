@@ -55,6 +55,9 @@ public class OptionalProductService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if(bestSeller.isEmpty())
+            return null;
         return findOptionalProduct(bestSeller.get(0));
     }
 }

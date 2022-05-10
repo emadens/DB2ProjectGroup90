@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tot_salesvalue_per_package", schema = "telco_db")
+@Table(name = "tot_salesValue_per_package", schema = "telco_db")
 public class TotSalesValuePerPackage {
     @Id
     private int package_id;
