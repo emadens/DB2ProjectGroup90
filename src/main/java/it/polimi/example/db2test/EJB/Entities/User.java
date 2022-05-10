@@ -16,8 +16,8 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String email;
-    private boolean solvent;
-    private int failedPayments;
+    private boolean solvent = true;
+    private int failedPayments = 0;
     @OneToMany(mappedBy= "user")
     private Collection<Order> orders;
 

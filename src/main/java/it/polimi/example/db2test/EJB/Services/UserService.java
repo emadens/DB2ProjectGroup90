@@ -35,10 +35,7 @@ public class UserService {
     public void createUser(String username, String password,String email) {
         User u;
         if(username!=null && password!=null && email!=null) {
-            u = new User();
-            u.setUsername(username);
-            u.setPassword(password);
-            u.setEmail(email);
+            u = new User(username, password, email);
             em.persist(u);
         }
     }

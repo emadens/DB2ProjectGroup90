@@ -65,7 +65,6 @@ public class Register extends HttpServlet {
                 throw new Exception("Missing or empty credential value");
             }
         } catch (Exception e) {
-            // for debugging only e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
             return;
         }
