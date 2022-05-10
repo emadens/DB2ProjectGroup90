@@ -72,16 +72,23 @@ public class Confirmation extends HttpServlet {
                 ctx.setVariable("selectedOP", ops);
                 ctx.setVariable("startDate", sdf.format(calendar.getTime()));
                 ctx.setVariable("existent", o.getId_Order());
+                ctx.setVariable("tot", o.getTot());
             }
             else {
                 ctx.setVariable("existent", -1);
+                ValidityPeriod vp=(ValidityPeriod) request.getSession().getAttribute("selectedValidityPeriod");
+                List<OptionalProduct> optionalProducts= (List<OptionalProduct>) request.getSession().getAttribute("selectedOP");
+                float tot=vp.getFee()*vp.getMonths()+optionalProducts.stream().map(OptionalProduct::getFee).map(x->x*vp.getMonths()).reduce((float) 0, Float::sum);
+
                 ctx.setVariable("p", request.getSession().getAttribute("p"));
                 ctx.setVariable("selectedServices", request.getSession().getAttribute("selectedServices"));
                 ctx.setVariable("vp", request.getSession().getAttribute("selectedValidityPeriod"));
                 ctx.setVariable("selectedOP", request.getSession().getAttribute("selectedOP"));
                 Calendar calendar = (Calendar) request.getSession().getAttribute("startDate");
                 ctx.setVariable("startDate", sdf.format(calendar.getTime()));
+                ctx.setVariable("tot", tot);
             }
+
             ctx.setVariable("packages", request.getAttribute("packages"));
         } else{
             ctx.setVariable("loggedIn", 0);

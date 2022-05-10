@@ -40,6 +40,7 @@
         </div>
       </fieldset>
       <p th:text="'Start Date: ' + ${startDate}"></p>
+      <p th:text="'Total: ' +${tot}"></p>
 
       <div>
         <form action="#" th:action="@{/Confirmation(billing=1, existent=${existent})}" method="POST">
