@@ -13,8 +13,8 @@
         <th>Total Purchases</th>
     </tr>
 <tr th:each="rs :${tot_ppp}":>
-    <td th:text="${rs.package_name}"></td>
-    <td th:text="${rs.total_purchases}"></td>
+    <td align="center" th:text="${rs.package_name}"></td>
+    <td align="center" th:text="${rs.total_purchases}"></td>
 </tr>
 </table>
 </div>
@@ -27,9 +27,9 @@
             <th>Total Purchases</th>
         </tr>
         <tr th:each="rs :${tot_ppvp}":>
-        <td th:text="${rs.package_name}"></td>
-        <td th:text="${rs.vp_months}"></td>
-        <td th:text="${rs.purchases}"></td>
+        <td align="center" th:text="${rs.package_name}"></td>
+        <td align="center" th:text="${rs.vp_months}"></td>
+        <td align="center" th:text="${rs.purchases}"></td>
     </tr></table>
 
 </div>
@@ -42,9 +42,9 @@
             <th>Total Sales value with Optional Products</th>
         </tr>
     <tr th:each="rs :${totSales}":>
-        <td th:text="${rs.package_name}"></td>
-        <td th:text="${rs.tot}"></td>
-        <td th:text="${rs.tot_with_op}"></td>
+        <td align="center" th:text="${rs.package_name}"></td>
+        <td align="center" th:text="${rs.tot}"></td>
+        <td align="center" th:text="${rs.tot_with_op}"></td>
     </tr></table>
 </div>
 <h3 align="left">Average number of optional products sold together with each service package.</h3>
@@ -55,8 +55,8 @@
             <th>Average</th>
         </tr>
     <tr th:each="rs :${avgOPxP}":>
-        <td th:text="${rs.package_name}"></td>
-        <td th:text="${rs.avg_num_op}"></td>
+        <td align="center" th:text="${rs.package_name}"></td>
+        <td align="center" th:text="${rs.avg_num_op}"></td>
     </tr></table>
 </div>
 <h3 align="left">Insolvent Users</h3>
@@ -67,7 +67,7 @@
 
         </tr>
     <tr th:each="rs :${insolventUsers}":>
-        <td th:text="${rs.username}"></td>
+        <td align="center" th:text="${rs.username}"></td>
     </tr></table>
 
 </div>
@@ -80,13 +80,32 @@
 
         </tr>
     <tr th:each="rs :${suspendedOrders}":>
-        <td th:text="${rs.timestamp}"></td>
-        <td th:text="${rs.username}"></td>
+        <td align="center" th:text="${rs.timestamp}"></td>
+        <td align="center" th:text="${rs.user.username}"></td>
     </tr></table>
 </div>
+
+<h3 align="left"> Alerts</h3>
+<div>
+    <table>
+        <tr>
+            <th>Timestamp</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Amount</th>
+        </tr>
+
+        <tr th:each="a :${alerts}":>
+            <td align="center" th:text="${a.timestamp}"></td>
+            <td align="center" th:text="${a.user.username}"></td>
+            <td align="center" th:text="${a.email}"></td>
+            <td align="center" th:text="${a.amount}"></td>
+        </tr></table>
+</div>
+
 <h3 align="left">Best seller optional product</h3>
 <div>
-    <p th:text="${bestsellerName}"
+    <p th:text="${bestsellerName}"></p>
 </div>
 
 </body>
