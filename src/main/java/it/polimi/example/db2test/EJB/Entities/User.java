@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String password;
     private String email;
     private boolean solvent;
+    private int failedPayments;
     @OneToMany(mappedBy= "user")
     private Collection<Order> orders;
     //@OneToMany(mappedBy ="username")
@@ -42,6 +43,13 @@ public class User implements Serializable {
     public String getEmail(){return this.email;}
 
     public void setEmail(String newEmail){this.email = newEmail;}
+
+    public int getFailedPayments() {
+        return failedPayments;
+    }
+    public void setFailedPayments(int failedPayments) {
+        this.failedPayments = failedPayments;
+    }
 
     public String toString(){
         return this.getUsername() +" " + this.getPassword() + " " + this.getEmail();

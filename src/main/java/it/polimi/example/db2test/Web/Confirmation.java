@@ -56,7 +56,6 @@ public class Confirmation extends HttpServlet {
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
         if (user != null) {
-            System.out.println("idOrder: " + request.getParameter("idOrder"));
             ctx.setVariable("loggedIn", 1);
             ctx.setVariable("username", user.getUsername());
             if(request.getParameter("idOrder")!=null){
@@ -103,8 +102,6 @@ public class Confirmation extends HttpServlet {
         boolean existent = !request.getParameter("existent").equals("-1");
         if(existent) orderID = Integer.parseInt(request.getParameter("existent"));
         Order o = (Order) request.getSession().getAttribute("order");
-        System.out.println("Existent: " + request.getParameter("existent"));
-        System.out.println("Confirmation:" + confirmation);
         if(!existent){
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             User user= (User) request.getSession().getAttribute("user");

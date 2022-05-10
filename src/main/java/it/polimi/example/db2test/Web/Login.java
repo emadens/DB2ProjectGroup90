@@ -43,7 +43,6 @@ public class Login extends HttpServlet{
         String path = "/WEB-INF/loginForm.html";
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-        System.out.println(request.getAttribute("loginForm"));
         if(request.getSession().getAttribute("redirectConfirmation")==null)
             request.getSession().setAttribute("redirectConfirmation", false);
         templateEngine.process(path, ctx, response.getWriter());
@@ -75,7 +74,6 @@ public class Login extends HttpServlet{
         }
 
         boolean confirmation = (boolean) request.getSession().getAttribute("redirectConfirmation");
-        System.out.println("Confiramtion: " + confirmation);
         String path;
         if (user == null) {
             ServletContext servletContext = getServletContext();
