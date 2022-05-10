@@ -16,6 +16,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String email;
+    @Column(columnDefinition = "TINYINT default '1'")
     private boolean solvent;
     private int failedPayments;
     @OneToMany(mappedBy= "user")
@@ -24,7 +25,8 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy ="User")
     private Collection<Alert> alerts;
-    public User(){}
+    public User(){
+    }
 
 
 

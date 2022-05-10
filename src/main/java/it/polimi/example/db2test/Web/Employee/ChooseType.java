@@ -48,7 +48,6 @@ public class ChooseType extends HttpServlet {
         ServletContext servletContext = getServletContext();
         final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-        // Todo: capire se è una porcata settare sia Session attribute che Context variable
 
         request.getSession().setAttribute("type", type);
         ctx.setVariable("type", type);

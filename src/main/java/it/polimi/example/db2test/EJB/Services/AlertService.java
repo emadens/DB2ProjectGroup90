@@ -17,13 +17,8 @@ public class AlertService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-    /*public AlertService(EntityManager em) {
-        this.em = em;
-    }*/
-
-    public void createValidityPeriod(User username, Timestamp timestamp){
+    public void createAlert(User username, Timestamp timestamp){
         Alert a=new Alert(username,timestamp);
-        //TODO
         em.persist(a);
     }
 

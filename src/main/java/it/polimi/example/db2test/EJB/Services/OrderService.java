@@ -24,10 +24,6 @@ public class OrderService {
     @PersistenceContext(unitName = "UserEJB")
     private EntityManager em;
 
-    /*public OrderService(EntityManager em) {
-        this.em = em;
-    }*/
-
     public void createOrder(Timestamp timestamp, User user, Package _package, ValidityPeriod validityPeriod, boolean confirmed, float tot, Calendar start_date, Collection<OptionalProduct> optionalProducts){
         Order o = new Order(timestamp,  user,  _package,  validityPeriod,   confirmed,  tot,  start_date, optionalProducts);
         em.persist(o);

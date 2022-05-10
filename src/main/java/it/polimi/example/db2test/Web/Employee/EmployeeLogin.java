@@ -59,13 +59,11 @@ public class EmployeeLogin extends HttpServlet {
                 throw new Exception("Missing or empty credential value");
             }
         } catch (Exception e) {
-            // for debugging only e.printStackTrace();
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
             return;
         }
         Employee employee;
         try {
-            // query db to authenticate for user
             employee = eService.checkCredentials(name, password);
         } catch (CredentialsException | NonUniqueResultException e) {
             e.printStackTrace();
@@ -73,10 +71,6 @@ public class EmployeeLogin extends HttpServlet {
             return;
         }
 
-        // If the user exists, add info to the session and go to home page, otherwise
-        // show login page with error message
-
-        // deleted queryService - can give possible problems
         String path;
 
         if (employee == null) {

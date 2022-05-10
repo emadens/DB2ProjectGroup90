@@ -99,7 +99,5 @@ public class createService extends HttpServlet {
             response.sendRedirect(path);
         }
     }
-    public void destroy() {
-    }
 
 }

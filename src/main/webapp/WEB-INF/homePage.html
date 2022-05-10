@@ -63,7 +63,7 @@
               <fieldset th:each="vp : ${p.validityPeriods}">
                   <div>
                       <p th:text="${vp.months}+' months'"></p>
-                      <p th:text="${vp.fee}+' denari/month'"></p>
+                      <p th:text="${vp.fee}+' euro/month'"></p>
                   </div>
               </fieldset>
               <p th:text="'Optional products:'"></p>
@@ -79,8 +79,6 @@
   </section>
 
 
-  <!-- Volendo si può gestire il Logout con form[pulsante]- fare un altro servlet in cui
-  resetti la variabile a 0 e user a null. -->
 
 </body>
 </html>

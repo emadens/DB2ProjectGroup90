@@ -73,7 +73,5 @@ public class UserService {
     public void failedPayment(String username){
         User u=findByName(username);
         u.setFailedPayments(u.getFailedPayments()+1);
-        //em.refresh(u);
-
     }
 }
